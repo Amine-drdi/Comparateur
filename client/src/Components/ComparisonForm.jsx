@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { FaMale, FaFemale, FaUser, FaUserFriends, FaChild, FaBirthdayCake, FaMapMarkerAlt, FaCalendarAlt, FaShieldAlt, FaIdCard, FaEnvelope, FaPhone, FaCheckCircle } from 'react-icons/fa';
+import {
+    FaMale, FaFemale, FaUser, FaUserFriends, FaChild, FaBirthdayCake,
+    FaMapMarkerAlt, FaCalendarAlt, FaShieldAlt, FaIdCard,
+    FaEnvelope, FaPhone, FaCheckCircle
+} from 'react-icons/fa';
 
 function ComparisonForm() {
     const [formData, setFormData] = useState({
-        // Étape 1: Adhérent
         genre: '',
         couverture: '',
         dateNaissance: '',
         regimeSocial: '',
-        // Étape 2: Contrat
         codePostal: '',
         dateDebutAssurance: '',
         typeCouverture: '',
-        // Étape 3: Coordonnées
         nom: '',
         prenom: '',
         email: '',
         telephone: ''
     });
-    
+
+    const [formErrors, setFormErrors] = useState({});
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -27,6 +29,40 @@ function ComparisonForm() {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const nextStep = () => {
+        const errors = {};
+
+        if (step === 1) {
+            if (!formData.genre) errors.genre = 'Veuillez sélectionner votre genre.';
+            if (!formData.couverture) errors.couverture = 'Veuillez sélectionner une couverture.';
+            if (!formData.dateNaissance) errors.dateNaissance = 'Veuillez entrer votre date de naissance.';
+            if (!formData.regimeSocial) errors.regimeSocial = 'Veuillez choisir un régime social.';
+        } else if (step === 2) {
+            if (!formData.codePostal) errors.codePostal = 'Code postal requis.';
+            if (!formData.dateDebutAssurance) errors.dateDebutAssurance = 'Date de début requise.';
+            if (!formData.typeCouverture) errors.typeCouverture = 'Type de couverture requise.';
+        } else if (step === 3) {
+            if (!formData.nom) errors.nom = 'Nom requis.';
+            if (!formData.prenom) errors.prenom = 'Prénom requis.';
+            if (!formData.email) errors.email = 'Email requis.';
+            if (!formData.telephone) errors.telephone = 'Téléphone requis.';
+        }
+
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            setError('Veuillez corriger les erreurs ci-dessous.');
+            return;
+        }
+
+        setFormErrors({});
+        setError('');
+        setStep(step + 1);
+    };
+
+    const prevStep = () => {
+        setStep(step - 1);
     };
 
     const handleSubmit = async (e) => {
@@ -38,38 +74,16 @@ function ComparisonForm() {
         try {
             const response = await axios.post('http://localhost:5000/api/comparaison', formData);
             setResult(response.data);
-            setStep(5); // Afficher les résultats
+            setStep(5);
         } catch (err) {
             setError('Erreur lors de la récupération des résultats.');
+        } finally {
             setLoading(false);
         }
     };
 
-    const nextStep = () => {
-        // Validation avant de passer à l'étape suivante
-        if (step === 1 && (!formData.genre || !formData.couverture || !formData.dateNaissance || !formData.regimeSocial)) {
-            setError('Veuillez remplir tous les champs obligatoires');
-            return;
-        }
-        if (step === 2 && (!formData.codePostal || !formData.dateDebutAssurance || !formData.typeCouverture)) {
-            setError('Veuillez remplir tous les champs obligatoires');
-            return;
-        }
-        if (step === 3 && (!formData.nom || !formData.prenom || !formData.email || !formData.telephone)) {
-            setError('Veuillez remplir tous les champs obligatoires');
-            return;
-        }
-        setError('');
-        setStep(step + 1);
-    };
-
-    const prevStep = () => {
-        setStep(step - 1);
-    };
-
-    // Fonction pour afficher le libellé complet du régime social
     const getRegimeSocialLabel = (value) => {
-        switch(value) {
+        switch (value) {
             case 'salarie': return 'Salarié';
             case 'sans_emploi': return 'Sans emploi';
             case 'retraite': return 'Retraité ancien salarié';
@@ -78,9 +92,8 @@ function ComparisonForm() {
         }
     };
 
-    // Fonction pour afficher le libellé complet du type de couverture
     const getCouvertureLabel = (value) => {
-        switch(value) {
+        switch (value) {
             case 'adulte': return 'Un adulte';
             case 'adulte_enfant': return 'Un adulte + enfant';
             case 'couple': return 'Un couple';
@@ -94,100 +107,75 @@ function ComparisonForm() {
             <h1 className="text-2xl md:text-3xl font-semibold text-sky-800 text-center mb-8">
                 Comparateur de Mutuelles Santé
             </h1>
-            
-            {/* Progress bar - maintenant 5 étapes (3 formulaires + vérification + résultats) */}
-            <div className="relative mb-8">
-                <div className="flex justify-between relative z-10">
-                    {[1, 2, 3, 4].map((item) => (
-                        <div key={item} className="flex flex-col items-center" style={{ width: `${100/4}%` }}>
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold mb-2 
-                                ${step >= item ? 'bg-sky-800 text-white' : 'bg-gray-200 text-gray-500'}`}>
-                                {item}
-                            </div>
-                            <span className={`text-xs text-center ${step >= item ? 'text-sky-800 font-semibold' : 'text-gray-500'}`}>
-                                {item === 1 ? 'Adhérent' : 
-                                 item === 2 ? 'Contrat' : 
-                                 item === 3 ? 'Coordonnées' : 
-                                 'Vérification'}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-                <div className="absolute top-4 left-0 right-0 h-1 bg-gray-200 z-0"></div>
-                <div className={`absolute top-4 left-0 h-1 bg-sky-800 z-0 transition-all duration-300 
-                    ${step === 1 ? 'w-0' : 
-                      step === 2 ? 'w-1/4' : 
-                      step === 3 ? 'w-2/4' : 
-                      step === 4 ? 'w-3/4' : 
-                      'w-full'}`}></div>
-            </div>
 
+            {/* Affichage global d'erreur */}
             {error && (
                 <div className="bg-red-50 text-red-700 p-3 rounded-lg mb-6 text-center">
                     {error}
                 </div>
             )}
 
-            {/* Étape 1: Adhérent */}
             {step === 1 && (
                 <form onSubmit={(e) => { e.preventDefault(); nextStep(); }} className="space-y-6">
                     <div>
                         <label className="block text-gray-700 font-semibold mb-3">Êtes-vous...</label>
                         <div className="grid grid-cols-2 gap-4">
-                            <button
-                                type="button"
-                                onClick={() => setFormData({...formData, genre: 'homme'})}
-                                className={`p-4 border rounded-lg flex flex-col items-center transition ${formData.genre === 'homme' ? 'border-sky-500 bg-sky-50 text-sky-800' : 'border-gray-300 hover:border-sky-300'}`}
-                            >
-                                <FaMale className="text-6xl mb-2 text-sky-800" />
-                                <span>Homme</span>
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setFormData({...formData, genre: 'femme'})}
-                                className={`p-4 border rounded-lg flex flex-col items-center transition ${formData.genre === 'femme' ? 'border-sky-500 bg-sky-50 text-sky-800' : 'border-gray-300 hover:border-sky-300'}`}
-                            >
-                                <FaFemale className="text-6xl mb-2 text-sky-800" />
-                                <span>Femme</span>
-                            </button>
+                            {['homme', 'femme'].map((val) => (
+                                <button
+                                    key={val}
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, genre: val })}
+                                    className={`p-4 border rounded-lg flex flex-col items-center transition ${
+                                        formData.genre === val ? 'border-sky-500 bg-sky-50 text-sky-800' : 'border-gray-300 hover:border-sky-300'
+                                    }`}
+                                >
+                                    {val === 'homme' ? <FaMale className="text-6xl mb-2 text-sky-800" /> : <FaFemale className="text-6xl mb-2 text-sky-800" />}
+                                    <span>{val.charAt(0).toUpperCase() + val.slice(1)}</span>
+                                </button>
+                            ))}
                         </div>
+                        {formErrors.genre && <p className="text-red-500 text-sm mt-1">{formErrors.genre}</p>}
                     </div>
 
                     <div>
                         <label className="block text-gray-700 font-semibold mb-3">Qui souhaitez-vous assurer ?</label>
                         <div className="grid grid-cols-2 gap-4">
                             {[
-                                { value: 'adulte', label: 'Un adulte', icon: <FaUser className="text-6xl mb-2 text-sky-800" /> },
-                                { value: 'adulte_enfant', label: 'Un adulte + enfant', icon: <div className="flex items-center justify-center mb-2"><FaUser className="text-6xl mb-2 text-sky-800" /><FaChild className="text-3xl mb-2 text-sky-800" /></div> },
-                                { value: 'couple', label: 'Un couple', icon: <FaUserFriends className="text-6xl mb-2 text-sky-800" /> },
-                                { value: 'couple_enfant', label: 'Un couple + enfant', icon: <div className="flex items-center justify-center mb-2"><FaUserFriends className="text-6xl mb-2 text-sky-800" /><FaChild className="text-3xl mb-2 text-sky-800" /></div> }
-                            ].map((option) => (
+                                { value: 'adulte', icon: <FaUser className="text-6xl text-sky-800" /> },
+                                { value: 'adulte_enfant', icon: <><FaUser className="text-5xl text-sky-800" /><FaChild className="text-3xl text-sky-800" /></> },
+                                { value: 'couple', icon: <FaUserFriends className="text-6xl text-sky-800" /> },
+                                { value: 'couple_enfant', icon: <><FaUserFriends className="text-5xl text-sky-800" /><FaChild className="text-3xl text-sky-800" /></> }
+                            ].map((opt) => (
                                 <button
-                                    key={option.value}
+                                    key={opt.value}
                                     type="button"
-                                    onClick={() => setFormData({...formData, couverture: option.value})}
-                                    className={`p-4 border rounded-lg flex flex-col items-center transition ${formData.couverture === option.value ? 'border-sky-500 bg-sky-50 text-sky-800' : 'border-gray-300 hover:border-sky-300'}`}
+                                    onClick={() => setFormData({ ...formData, couverture: opt.value })}
+                                    className={`p-4 border rounded-lg flex flex-col items-center transition ${
+                                        formData.couverture === opt.value ? 'border-sky-500 bg-sky-50 text-sky-800' : 'border-gray-300 hover:border-sky-300'
+                                    }`}
                                 >
-                                    {option.icon}
-                                    <span>{option.label}</span>
+                                    {opt.icon}
+                                    <span>{getCouvertureLabel(opt.value)}</span>
                                 </button>
                             ))}
                         </div>
+                        {formErrors.couverture && <p className="text-red-500 text-sm mt-1">{formErrors.couverture}</p>}
                     </div>
 
                     <div>
                         <label className="block text-gray-700 font-semibold mb-2 flex items-center">
-                            <FaBirthdayCake className="mr-2" />
-                            Date de naissance
+                            <FaBirthdayCake className="mr-2" /> Date de naissance
                         </label>
                         <input
                             type="date"
                             name="dateNaissance"
                             value={formData.dateNaissance}
                             onChange={handleChange}
-                            required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 ${
+                                formErrors.dateNaissance ? 'border-red-500' : 'border-gray-300'
+                            }`}
                         />
+                        {formErrors.dateNaissance && <p className="text-red-500 text-sm mt-1">{formErrors.dateNaissance}</p>}
                     </div>
 
                     <div>
@@ -196,8 +184,9 @@ function ComparisonForm() {
                             name="regimeSocial"
                             value={formData.regimeSocial}
                             onChange={handleChange}
-                            required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white"
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-sky-500 bg-white ${
+                                formErrors.regimeSocial ? 'border-red-500' : 'border-gray-300'
+                            }`}
                         >
                             <option value="">Sélectionnez votre régime</option>
                             <option value="salarie">Salarié</option>
@@ -205,13 +194,13 @@ function ComparisonForm() {
                             <option value="retraite">Retraité ancien salarié</option>
                             <option value="fonctionnaire">Fonctionnaire d'état</option>
                         </select>
+                        {formErrors.regimeSocial && <p className="text-red-500 text-sm mt-1">{formErrors.regimeSocial}</p>}
                     </div>
 
                     <div className="flex justify-end">
                         <button
                             type="submit"
                             className="bg-sky-800 hover:bg-sky-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300"
-                            disabled={!formData.genre || !formData.couverture || !formData.dateNaissance || !formData.regimeSocial}
                         >
                             Continuer
                         </button>

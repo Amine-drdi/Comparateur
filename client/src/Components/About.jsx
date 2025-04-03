@@ -1,4 +1,4 @@
-import img1 from "../../public/Nouveau dossier/about.jpg";
+import img1 from "../img/about.jpg";
 import { motion } from "framer-motion";
 export default function About() {
     return (

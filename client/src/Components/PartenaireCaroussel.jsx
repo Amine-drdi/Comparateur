@@ -3,14 +3,14 @@ import React from 'react';
 const PartenaireCaroussel = () => {
   // Tableau des logos partenaires (remplacez par vos propres images)
   const partners = [
-    { id: 1, name: 'Néoliane', logo: '../../public/Compagnies/Neo.webp' },
-    { id: 2, name: 'April', logo: '../../public/Compagnies/april.png' },
-    { id: 3, name: 'Alptis', logo: '../../public/Compagnies/alptis.png' },
-    { id: 4, name: 'Apivia', logo: '../../public/Compagnies/apivia.png' },
-    { id: 5, name: 'Alliaz', logo: '../../public/Compagnies/allianz.png' },
-    { id: 6, name: 'Groupama', logo: '../../public/Compagnies/groupama.png' },
-    { id: 7, name: 'AXA', logo: '../../public/Compagnies/AXA.png' },
-    { id: 8, name: 'Swisslife', logo: '../../public/Compagnies/swisslife.png' },
+    { id: 1, name: 'Néoliane', logo: '/Compagnies/Neo.webp' },
+    { id: 2, name: 'April', logo: '/Compagnies/april.png' },
+    { id: 3, name: 'Alptis', logo: '/Compagnies/alptis.png' },
+    { id: 4, name: 'Apivia', logo: '/Compagnies/apivia.png' },
+    { id: 5, name: 'Alliaz', logo: '/Compagnies/allianz.png' },
+    { id: 6, name: 'Groupama', logo: '/Compagnies/groupama.png' },
+    { id: 7, name: 'AXA', logo: '/Compagnies/AXA.png' },
+    { id: 8, name: 'Swisslife', logo: '/Compagnies/swisslife.png' },
   ];
 
   // Dupliquer les partenaires pour un défilement infini fluide

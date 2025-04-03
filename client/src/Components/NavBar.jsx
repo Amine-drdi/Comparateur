@@ -43,7 +43,7 @@ export default function Navbar() {
           <div className="flex space-x-3 ">
             <a href="/compare" className="block p-3 rounded-lg hover:bg-gray-50 border border-gray-100 transition min-w-[180px]">
               <img 
-                  src="../../public/Nouveau dossier/assurance-medicale.png" 
+                  src="/Nouveau dossier/assurance-medicale.png" 
                   alt="Mutuelle santé" 
                   className="w-20 h-20 mb-2 mx-auto"
                 />
@@ -63,7 +63,7 @@ export default function Navbar() {
           <div className="flex space-x-3 ">
           <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 border border-gray-100 transition min-w-[180px]">
               <img 
-                  src="../../public/Nouveau dossier/voiture.png" 
+                  src="/Nouveau dossier/voiture.png" 
                   alt="Assurance auto" 
                   className="w-20 h-20 mb-2 mx-auto"
                 />
@@ -82,7 +82,7 @@ export default function Navbar() {
           <div className="flex space-x-3 ">
             <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 border border-gray-100 transition min-w-[180px]">
               <img 
-                  src="../../public/Nouveau dossier/maison.png" 
+                  src="/Nouveau dossier/maison.png" 
                   alt="Assurance habitation" 
                   className="w-20 h-20 mb-2 mx-auto"
                 />
