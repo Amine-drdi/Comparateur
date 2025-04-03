@@ -16,6 +16,9 @@ function ComparisonForm() {
         //typeCouverture: '',
         codePostal: '',
         selectedCode: null,
+        niveauRemboursement: '',
+        accepteAppel: '',
+        conditionsAcceptees: false,
         // Étape 3: Coordonnées
         nom: '',
         prenom: '',
@@ -126,17 +129,18 @@ function ComparisonForm() {
             {/* Progress bar - maintenant 5 étapes (3 formulaires + vérification + résultats) */}
             <div className="relative mb-8">
                 <div className="flex justify-between relative z-10">
-                    {[1, 2, 3, 4].map((item) => (
+                    {[1, 2, 3, 4,5].map((item) => (
                         <div key={item} className="flex flex-col items-center" style={{ width: `${100/4}%` }}>
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold mb-2 
                                 ${step >= item ? 'bg-sky-800 text-white' : 'bg-gray-200 text-gray-500'}`}>
                                 {item}
                             </div>
                             <span className={`text-xs text-center ${step >= item ? 'text-sky-800 font-semibold' : 'text-gray-500'}`}>
-                                {item === 1 ? 'Adhérent' : 
-                                 item === 2 ? 'Contrat' : 
-                                 item === 3 ? 'Coordonnées' : 
-                                 'Vérification'}
+                            {item === 1 ? 'Adhérent' : 
+                     item === 2 ? 'Contrat' : 
+                     item === 3 ? 'Coordonnées' : 
+                     item === 4 ? 'Couverture' : 
+                     'Vérification'}
                             </span>
                         </div>
                     ))}

@@ -17,7 +17,7 @@ import Coordonnees  from './Components/Coordonnees';
 import DateContrat  from './Components/DateContrat';
 import Profile  from './Components/Profile';
 
-import ComparisonForm from './Components/ComparisonForm';
+import ComparisonForm from './Components/ComparisonForm22';
 
 
 function App() {
