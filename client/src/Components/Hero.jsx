@@ -18,7 +18,7 @@ const Hero = () => {
             </span>
           </h2>
           <p className="text-lg text-gray-700">
-            Comparez en 2 minutes les offres de plus de 120 assureurs partenaires et trouvez la meilleure protection au prix idéal.
+            Comparez en 2 minutes les offres de plus de 30 assureurs partenaires et trouvez la meilleure protection au prix idéal.
           </p>
           <div className="mt-8 flex space-x-4">
             <a
@@ -47,7 +47,7 @@ const Hero = () => {
           >
             <div className="flex flex-col items-center p-6 rounded-xl bg-blue-200">
               <FiUsers className="text-blue-700 text-4xl" />
-              <p className="text-2xl font-bold text-blue-800">120+</p>
+              <p className="text-2xl font-bold text-blue-800">30+</p>
               <p className="text-sm text-blue-900">Assureurs</p>
             </div>
             <div className="flex flex-col items-center p-6 rounded-xl bg-blue-300">

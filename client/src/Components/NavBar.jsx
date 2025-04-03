@@ -41,7 +41,7 @@ export default function Navbar() {
       content: (
         <div className="p-3 ">
           <div className="flex space-x-3 ">
-            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 border border-gray-100 transition min-w-[180px]">
+            <a href="/compare" className="block p-3 rounded-lg hover:bg-gray-50 border border-gray-100 transition min-w-[180px]">
               <img 
                   src="../../public/Nouveau dossier/assurance-medicale.png" 
                   alt="Mutuelle santé" 

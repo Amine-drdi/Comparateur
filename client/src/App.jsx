@@ -8,6 +8,8 @@ import PartenaireCaroussel from './Components/PartenaireCaroussel';
 import ComparateurAssurance from './Components/ComparateurAssurance';
 import About from './Components/About';
 import Footer from './Components/Footer';
+import ComparisonForm from './Components/ComparisonForm';
+
 function App() {
   return (
     <AuthProvider>
@@ -22,6 +24,15 @@ function App() {
           <Route path="/comparateurAssurance" element={<ComparateurAssurance/>} />
           <Route path="/About" element={<About/>} />
           <Route path="/Footer" element={<Footer/>} />
+          <Route path="/compare" element={
+            <div>
+              <Navbar/>
+            <ComparisonForm />
+              <Footer/>
+            </div>
+            } />
+
+
 
         </Routes>
       </Router>
