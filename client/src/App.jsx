@@ -8,12 +8,22 @@ import PartenaireCaroussel from './Components/PartenaireCaroussel';
 import ComparateurAssurance from './Components/ComparateurAssurance';
 import About from './Components/About';
 import Footer from './Components/Footer';
+import DateNaissance from './Components/DateNaissance';
+import RegimeSocial from './Components/RegimeSocial';
+import Ville from './Components/Ville';
+import Beneficiaires from './Components/Beneficiaires';
+import NiveauxRemboursement from './Components/NiveauxRemboursement';
+import Coordonnees  from './Components/Coordonnees';
+import DateContrat  from './Components/DateContrat';
+import Profile  from './Components/Profile';
+
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
       <Router>
         <Routes>
+        <Route exact path="/" element={<Profile/>} />
         <Route path="/" element={<Navigate to="/Home" />} />
         <Route path="/Home" element={<Home />} />
           <Route path="/hero" element={<Hero />} />
@@ -22,6 +32,13 @@ function App() {
           <Route path="/comparateurAssurance" element={<ComparateurAssurance/>} />
           <Route path="/About" element={<About/>} />
           <Route path="/Footer" element={<Footer/>} />
+          <Route path="/date-naissance" element={<DateNaissance/>} />
+            <Route path="/regime-social" element={<RegimeSocial/>} />
+            <Route path="/ville" element={<Ville/>} />
+            <Route path="/date-contrat" element={<DateContrat/>} />
+            <Route path="/beneficiaires" element={<Beneficiaires/>} />
+            <Route path="/niveaux-remboursement" element={<NiveauxRemboursement/>} />
+            <Route path="/coordonnees" element={<Coordonnees/>} />
 
         </Routes>
       </Router>

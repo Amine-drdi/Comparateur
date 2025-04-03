@@ -1,0 +1,563 @@
+/* Style principal du conteneur */
+.mutuelle-devis-container {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding-top: 1rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header avec logo et rating */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .avis-verifies {
+    display: flex;
+    align-items: center;
+    background-color: #f0f8ff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+  
+  /* Barre de progression */
+  .progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 1rem 0;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: #0088ff;
+    transition: width 0.3s ease;
+  }
+  
+  .progress-text {
+    font-size: 0.8rem;
+    color: #0088ff;
+    text-align: right;
+  }
+  
+  /* Layout principal du contenu */
+  .devis-content {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  /* Sidebar avec les étapes */
+  .sidebar {
+    width: 250px;
+    padding: 1rem;
+  }
+  
+  .sidebar-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  
+  .sidebar-step {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #888;
+  }
+  
+  .sidebar-step.active {
+    color: #0088ff;
+    font-weight: bold;
+  }
+  
+  .sidebar-step.passed {
+    color: #0088ff;
+  }
+  
+  .step-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+  }
+  
+  .active .step-icon, .passed .step-icon {
+    background-color: #0088ff;
+    color: white;
+  }
+  
+  /* Conteneur du formulaire */
+  .form-container {
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .form-wrapper {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
+  
+  /* Styles généraux des étapes du formulaire */
+  .form-step {
+    margin-bottom: 2rem;
+  }
+  
+  .step-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  /* Boutons */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .continue-btn {
+    background-color: #ff6b4a;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  .continue-btn:hover {
+    background-color: #ff5a36;
+  }
+  
+  .continue-btn:disabled {
+    background-color: #ffaa90;
+    cursor: not-allowed;
+  }
+  
+  .back-btn {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+  
+  .back-btn:hover {
+    background-color: #f3f3f3;
+  }
+  
+  /* Sélection du genre */
+  .gender-options {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .gender-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 200px;
+    transition: all 0.3s;
+  }
+  
+  .gender-option:hover, .gender-option.selected {
+    border-color: #0088ff;
+    box-shadow: 0 2px 12px rgba(0, 136, 255, 0.1);
+  }
+  
+  .icon-container {
+    margin-bottom: 1rem;
+  }
+  
+  .gender-icon {
+    width: 64px;
+    height: 64px;
+  }
+  
+  .radio-button {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .radio-inner {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: transparent;
+  }
+  
+  .radio-inner.checked {
+    background-color: #0088ff;
+  }
+  
+  /* Inputs de date */
+  .date-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .date-input {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    transition: border-color 0.3s;
+  }
+  
+  .year-input {
+    width: 100px;
+  }
+  
+  .date-input:focus {
+    border-color: #0088ff;
+    outline: none;
+  }
+  
+  .date-separator {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    color: #888;
+  }
+  
+  /* Select du régime social */
+  .regime-select-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem auto;
+  }
+  
+  .regime-select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    appearance: none;
+    background-color: white;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+  
+  .regime-select:focus {
+    border-color: #0088ff;
+    outline: none;
+  }
+  
+  .regime-select.has-value {
+    border-color: #0088ff;
+  }
+  
+  .select-arrow {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #888;
+    pointer-events: none;
+  }
+  
+  /* Sélection de ville */
+  .ville-container {
+    margin: 2rem auto;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .code-postal-input-container {
+    position: relative;
+  }
+  
+  .code-postal-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+  
+  .code-postal-input:focus {
+    border-color: #0088ff;
+    outline: none;
+  }
+  
+  .suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .suggestion-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .suggestion-item:hover {
+    background-color: #f3f9ff;
+  }
+  
+  .selected-ville {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid #0088ff;
+    border-radius: 8px;
+    background-color: #f3f9ff;
+  }
+  
+  .clear-button {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+  }
+  
+  .clear-button:hover {
+    color: #ff3b30;
+  }
+  
+  /* Options de bénéficiaires */
+  .beneficiaires-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+  
+  .beneficiaire-option {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .beneficiaire-option:hover, .beneficiaire-option.selected {
+    border-color: #0088ff;
+    background-color: #f3f9ff;
+  }
+  
+  .beneficiaire-option span {
+    margin-left: 1rem;
+  }
+  
+  /* Options de niveau de remboursement */
+  .coverage-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .coverage-category {
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1.5rem;
+  }
+  
+  .coverage-category h3 {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .category-icon {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .category-details {
+    font-size: 0.85rem;
+    color: #888;
+    margin-left: 0.5rem;
+    font-weight: normal;
+  }
+  
+  .coverage-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  
+  .coverage-option {
+    flex: 1;
+    padding: 0.5rem;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  
+  .coverage-option:hover {
+    background-color: #f3f9ff;
+    border-color: #0088ff;
+  }
+  
+  .coverage-option.selected {
+    background-color: #0088ff;
+    color: white;
+    border-color: #0088ff;
+  }
+  
+  /* Formulaire de coordonnées */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+  
+  .form-group input:focus {
+    border-color: #0088ff;
+    outline: none;
+  }
+  
+  .email-info {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 0.5rem;
+  }
+  
+  /* Message de succès */
+  .success-message {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .success-message h1 {
+    color: #0088ff;
+    margin-bottom: 1rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .devis-content {
+      flex-direction: column;
+    }
+    
+    .sidebar {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    
+    .gender-options {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .gender-option {
+      width: 100%;
+      max-width: 300px;
+    }
+    
+    .button-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .back-btn {
+      margin-right: 0;
+    }
+    
+    .coverage-options {
+      flex-wrap: wrap;
+    }
+    
+    .coverage-option {
+      flex-basis: 48%;
+    }
+  }
