@@ -17,6 +17,9 @@ import Coordonnees  from './Components/Coordonnees';
 import DateContrat  from './Components/DateContrat';
 import Profile  from './Components/Profile';
 
+import ComparisonForm from './Components/ComparisonForm';
+
+
 function App() {
   return (
     <AuthProvider>
@@ -32,6 +35,7 @@ function App() {
           <Route path="/comparateurAssurance" element={<ComparateurAssurance/>} />
           <Route path="/About" element={<About/>} />
           <Route path="/Footer" element={<Footer/>} />
+
           <Route path="/date-naissance" element={<DateNaissance/>} />
             <Route path="/regime-social" element={<RegimeSocial/>} />
             <Route path="/ville" element={<Ville/>} />
@@ -39,6 +43,17 @@ function App() {
             <Route path="/beneficiaires" element={<Beneficiaires/>} />
             <Route path="/niveaux-remboursement" element={<NiveauxRemboursement/>} />
             <Route path="/coordonnees" element={<Coordonnees/>} />
+
+          <Route path="/compare" element={
+            <div>
+              <Navbar/>
+            <ComparisonForm />
+              <Footer/>
+            </div>
+            } />
+
+
+
 
         </Routes>
       </Router>

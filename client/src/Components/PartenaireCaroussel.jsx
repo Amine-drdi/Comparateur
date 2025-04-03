@@ -24,7 +24,7 @@ const PartenaireCaroussel = () => {
               Nos partenaires
             </span>
             <h2 className="text-3xl font-bold text-gray-900 mt-4 mb-14">
-            Plus de 120 assureurs comparés
+            Plus de 30 assureurs comparés
             </h2>
             </div>
         

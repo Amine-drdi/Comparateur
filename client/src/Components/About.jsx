@@ -27,7 +27,7 @@ export default function About() {
              Notre mission : vous offrir une expertise approfondie et vous accompagner dans la recherche du contrat le plus adapté à votre profil, en toute simplicité. <br/><br/>
 
              <strong>Trouvez la meilleure offre au meilleur prix</strong><br/>
-                Le Comparateur Assurance s'appuie sur un réseau de plus de 120 assureurs, courtiers et mutuelles pour vous proposer un large éventail de solutions. Que vous recherchiez une assurance auto, habitation, santé ou emprunteur, nous vous permettons de comparer des milliers de formules afin de faire le meilleur choix. Grâce à notre comparateur de prix, vous optimisez votre budget tout en bénéficiant d’une couverture optimale en cas de sinistre.
+                Le Comparateur Assurance s'appuie sur un réseau de plus de 30 assureurs, courtiers et mutuelles pour vous proposer un large éventail de solutions. Que vous recherchiez une assurance auto, habitation, santé ou emprunteur, nous vous permettons de comparer des milliers de formules afin de faire le meilleur choix. Grâce à notre comparateur de prix, vous optimisez votre budget tout en bénéficiant d’une couverture optimale en cas de sinistre.
             </p>
 
         </motion.div>
