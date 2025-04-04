@@ -144,8 +144,15 @@ export default function Navbar() {
             </ul>
           </div>
 
-          {/* Colonne droite - Espace vide (pour l'équilibre) */}
-          <div className="w-32 flex-shrink-0"></div>
+          {/* Bouton Connecter */}
+          <div className="flex-shrink-0">
+  <a
+   href="/login"
+    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition"
+  >
+    Se connecter 
+  </a>
+</div>
         </div>
       </div>
     </nav>

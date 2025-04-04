@@ -5,6 +5,7 @@ import Navbar from './Components/NavBar';
 import { Home } from './pages/Home';
 import Footer from './Components/Footer';
 import ComparisonForm from './Components/ComparisonForm';
+import AuthPage from './pages/AuthPage';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
             <Route path="/" element={<Navigate to="/Home" />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/compare" element={<ComparisonForm />} />
+            <Route path="/login" element={<AuthPage />} />
+
           </Routes>
           <Footer />
         </CartProvider>
