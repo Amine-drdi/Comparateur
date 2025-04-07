@@ -17,6 +17,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+// Appelle cette fonction pour se connecter
+  const login = (token) => {
+    localStorage.setItem("token", token);
+    setIsAuthenticated(true);
+  };
+
+
   // Appelle cette fonction pour se déconnecter
   const logout = () => {
     localStorage.removeItem("token");
@@ -29,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, checkAuth, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, checkAuth, logout,login }}>
       {children}
     </AuthContext.Provider>
   );

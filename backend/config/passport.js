@@ -1,45 +1,30 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
- const User = require('../models/User');
- 
-module.exports = function (passport) {
-  passport.use(
-    new GoogleStrategy(
-      {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/auth/google/callback',
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        const newUser = {
-          googleId: profile.id,
-          displayName: profile.displayName,
-          email: profile.emails[0].value,
-          photo: profile.photos[0].value,
-        };
+const User = require('../models/User');
 
-        try {
-          let user = await User.findOne({ googleId: profile.id });
-
-          if (user) return done(null, user);
-
-          user = await User.create(newUser);
-          done(null, user);
-        } catch (err) {
-          console.error(err);
-        }
-      }
-    )
-  );
- 
-  
-  passport.serializeUser((user, done) => done(null, user.id));
-  passport.deserializeUser(async (id, done) => {
+module.exports = passport => {
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: '/auth/google/callback'
+  },
+  async (accessToken, refreshToken, profile, done) => {
     try {
-      const user = await User.findById(id);
-      done(null, user);
+      // Ne pas créer automatiquement l'utilisateur
+      const existingUser = await User.findOne({ email: profile.emails[0].value });
+
+      // Passer l'email (et profil si besoin) même si user n'existe pas
+      return done(null, { email: profile.emails[0].value, exists: !!existingUser });
     } catch (err) {
-      done(err);
+      return done(err, null);
     }
-  });
-  
+  }
+));
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
 };

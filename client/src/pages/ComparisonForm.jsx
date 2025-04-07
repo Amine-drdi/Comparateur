@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { registerUser } from "../api/authApi";  
 import {
     FaMale, FaFemale, FaUser, FaUserFriends, FaChild, FaBirthdayCake,
     FaMapMarkerAlt, FaCalendarAlt, FaShieldAlt, FaIdCard,
@@ -65,22 +65,25 @@ function ComparisonForm() {
         setStep(step - 1);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
-        setResult(null);
-
-        try {
-            const response = await axios.post('http://localhost:5000/api/comparaison', formData);
-            setResult(response.data);
-            setStep(5);
-        } catch (err) {
-            setError('Erreur lors de la récupération des résultats.');
-        } finally {
-            setLoading(false);
-        }
-    };
+  const handleSubmit = async (e) => {
+            e.preventDefault();
+            setLoading(true);
+            setError('');
+            setResult(null);
+          
+            try {
+              await registerUser(formData);  
+              setStep(5);  
+            } catch (err) {
+              if (err.response?.status === 409) {
+                setError("❌ Cet utilisateur est déjà enregistré.");
+              } else {
+                setError("❌ Une erreur est survenue lors de l'enregistrement.");
+              }
+            } finally {
+              setLoading(false);
+            }
+          };
 
     const getRegimeSocialLabel = (value) => {
         switch (value) {

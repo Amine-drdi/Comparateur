@@ -1,7 +1,33 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaGoogle, FaFacebook } from "react-icons/fa";
-
+import { FaGoogle } from "react-icons/fa";
+import { sendCode } from "../api/authApi";  
+import { useLocation, useNavigate } from "react-router-dom";
 export default function AuthPage() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const errorParam = queryParams.get("error");
+    console.log("errorParam:", errorParam); // DEBUG
+
+    if (errorParam === "email_inexistant") {
+      setMessage("❌ Utilisateur non trouvé, veuillez vous inscrire");
+    }
+  }, [location]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+       await sendCode(email); // appel API
+      navigate('/verify-code', { state: { email } }); // transmettre l'email
+    } catch (err) {
+      setMessage(`❌ ${err.message}`);
+    }
+  };
+  
+
   return (
     <div className="min-h-screen my-10 bg-gray-50 flex flex-col items-center justify-center px-4">
       <motion.div
@@ -18,7 +44,7 @@ export default function AuthPage() {
         </p>
 
         {/* Email login */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Adresse e-mail
@@ -26,12 +52,12 @@ export default function AuthPage() {
             <input
               type="email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-
-      
 
           <button
             type="submit"
@@ -40,6 +66,13 @@ export default function AuthPage() {
             Se connecter
           </button>
         </form>
+
+        {/* Affichage du message de réponse */}
+        {message && (
+          <p className="mt-4 text-sm text-center text-gray-600">
+            {message}
+          </p>
+        )}
 
         {/* OR separator */}
         <div className="flex items-center my-10">
@@ -57,10 +90,7 @@ export default function AuthPage() {
             <FaGoogle className="mr-2 text-red-500" />
             Continuer avec Google
           </a>
-     
         </div>
-
-     
       </motion.div>
     </div>
   );
