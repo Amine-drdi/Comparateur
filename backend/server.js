@@ -6,6 +6,7 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const devisRoutes = require('./routes/devisRoute');
 
 const authRoute = require('./routes/authRoute');
 require('./config/passport')(passport);
@@ -61,6 +62,7 @@ const ensureAuth = (req, res, next) => {
 
 // Routes principales
 app.use('/auth', authRoute);
+app.use('/api/devis', devisRoutes);
 
 // Route protégée pour récupérer le profil utilisateur
 app.get('/profile', ensureAuth, (req, res) => {

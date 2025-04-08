@@ -35,10 +35,21 @@ export const fetchUserProfileFromToken = createAsyncThunk(
   }
 );
 
+// 🔒 Récupération sécurisée de l'utilisateur depuis localStorage
+let parsedUser = null;
+try {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser && storedUser !== 'undefined') {
+    parsedUser = JSON.parse(storedUser);
+  }
+} catch (e) {
+  parsedUser = null;
+}
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: JSON.parse(localStorage.getItem('user')) || null,
+    user: parsedUser,
     token: localStorage.getItem('token') || null,
     loading: false,
     error: null,
@@ -51,7 +62,7 @@ const authSlice = createSlice({
       localStorage.removeItem('user');
       localStorage.removeItem('token');
     },
-    // ✅ Ajout de setUser pour usage manuel avec dispatch(setUser(...))
+    // ✅ setUser
     setUser: (state, action) => {
       state.user = action.payload;
       localStorage.setItem('user', JSON.stringify(action.payload));
@@ -88,6 +99,5 @@ const authSlice = createSlice({
   },
 });
 
-// ✅ Ajoute setUser à l'export
 export const { logout, setUser } = authSlice.actions;
 export default authSlice.reducer;

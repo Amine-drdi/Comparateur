@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 
 export default function MesDevis() {
   const [tab, setTab] = useState('sante');
+  const [devisData, setDevisData] = useState({
+    sante: [],
+    auto: [],
+    moto: [],
+    habitation: []
+  });
 
   const tabs = [
     { key: 'sante', label: 'Mutuelle santé' },
@@ -11,30 +17,36 @@ export default function MesDevis() {
     { key: 'habitation', label: 'Assurance habitation' },
   ];
 
-  const devis = {
-    sante: [
-      {
-        date: '08/04/2025',
-        adulte: 1,
-        enfant: 2,
-        prix: '64,64',
-        debut: '08/04/2025',
-      },
-      {
-        date: '04/04/2025',
-        adulte: 2,
-        enfant: 2,
-        prix: '71,44',
-        debut: '05/04/2025',
-      },
-    ],
-    auto: [],
-    moto: [],
-    habitation: [],
-  };
+  useEffect(() => {
+    const fetchDevis = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/devis/categorie/${tab}`);
+        const data = await res.json();
+
+        // Traitement : compter adultes/enfants + formater les champs
+        const mapped = data.map((d) => {
+          const adultes = d.members.filter((m) => m.type === 'adulte').length;
+          const enfants = d.members.filter((m) => m.type === 'enfant').length;
+          return {
+            date: new Date(d.dateSearch).toLocaleDateString(),
+            adulte: adultes,
+            enfant: enfants,
+            prix: d.prixTotal.toFixed(2).replace('.', ','),
+            debut: new Date(d.dateDebutAssurance).toLocaleDateString()
+          };
+        });
+
+        setDevisData((prev) => ({ ...prev, [tab]: mapped }));
+      } catch (err) {
+        console.error('Erreur fetch devis:', err);
+      }
+    };
+
+    fetchDevis();
+  }, [tab]);
 
   const renderDevis = (category) => {
-    if (devis[category].length === 0) {
+    if (devisData[category].length === 0) {
       return (
         <p className="text-gray-500 text-sm italic">
           Aucun devis disponible pour cette catégorie.
@@ -42,7 +54,7 @@ export default function MesDevis() {
       );
     }
 
-    return devis[category].map((devisItem, idx) => (
+    return devisData[category].map((devisItem, idx) => (
       <div
         key={idx}
         className="bg-white p-6 rounded-lg shadow-sm border flex flex-col md:flex-row md:items-center justify-between mb-5"
@@ -51,15 +63,9 @@ export default function MesDevis() {
           <p className="text-gray-600 text-sm mb-1">
             Votre meilleur prix obtenu le {devisItem.date}
           </p>
-          <p className="text-sm">
-            Adulte : <strong>{devisItem.adulte}</strong>
-          </p>
-          <p className="text-sm">
-            Enfant : <strong>{devisItem.enfant}</strong>
-          </p>
-          <p className="text-sm">
-            Début de contrat : <strong>{devisItem.debut}</strong>
-          </p>
+          <p className="text-sm">Adulte : <strong>{devisItem.adulte}</strong></p>
+          <p className="text-sm">Enfant : <strong>{devisItem.enfant}</strong></p>
+          <p className="text-sm">Début de contrat : <strong>{devisItem.debut}</strong></p>
         </div>
 
         <div className="flex items-center space-x-6">
@@ -108,16 +114,13 @@ export default function MesDevis() {
     <div className="max-w-7xl mx-auto px-10 py-10 mt-2">
       <h1 className="text-3xl font-bold text-blue-600 mb-6">Mes devis</h1>
 
-      {/* Onglets */}
       <div className="flex border-b border-gray-200 mb-8">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
             className={`px-4 py-2 font-semibold ${
-              tab === t.key
-                ? 'text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-700'
+              tab === t.key ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-700'
             }`}
           >
             {t.label}
@@ -125,11 +128,8 @@ export default function MesDevis() {
         ))}
       </div>
 
-      {/* Contenu dynamique */}
       <div className="space-y-5">
         {renderDevis(tab)}
-
-        {/* Bouton spécifique selon l’onglet actif */}
         <div className="pt-4">
           <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg">
             {getNewDevisLabel(tab)}
