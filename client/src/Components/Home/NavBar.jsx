@@ -36,7 +36,7 @@ export default function Navbar() {
       ),
     },
     {
-      name: "Mutuelle santé",
+      name: <a href="/InsuranceComponent" className="text-blue-600 hover:underline">Mutuelle santé</a>,
       icon: <FaHeartbeat className="mr-2" />,
       content: (
         <div className="p-3 ">
