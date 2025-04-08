@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {  useNavigate } from "react-router-dom";
-
+import { useSelector } from 'react-redux';
+ 
 import { motion, AnimatePresence } from "framer-motion";
 import { FaHome, FaChevronDown, FaBloggerB} from "react-icons/fa";
 import { FaHeartbeat , FaCar } from "react-icons/fa";
@@ -10,8 +11,11 @@ import { useAuth } from '../context/AuthContext';
 export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const { isAuthenticated, logout } = useAuth();
+ 
+const user = useSelector((state) => state.auth.user);
+const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
-
+ 
   // Données des menus
   const menuItems = [
     {

@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const authController = require('../controllers/authController');
+const { verifyToken } = require('../middlewares/authMiddleware');
 
 // ==========================
 // Authentification Google
@@ -52,6 +53,10 @@ router.get('/failure', authController.failure);
 // enregister utilisateur 
 router.post('/register', authController.registerUser);
 
+// récupères  utilisateur 
+router.get('/profile/:id', authController.profileUser);
+
+router.get('/me', verifyToken, authController.getAuthenticatedUser);
 
 
 module.exports = router;

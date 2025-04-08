@@ -1,24 +1,47 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserProfileFromToken, setUser } from '../redux/authSlice';
+import { getUserProfileToken } from '../api/authApi';
 
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
 
     if (token) {
-      login(token); // enregistre le token dans localStorage et met isAuthenticated à true
-      navigate('/dashboard', { replace: true }); // Supprime le token de l'URL pour sécurité
-    }
-  }, [location, login, navigate]);
+      localStorage.setItem('token', token);
+      dispatch(fetchUserProfileFromToken());
 
-  return <div className="max-w-3xl mx-auto my-10 p-6 bg-white rounded-xl shadow-md">
-  <h1 className="text-2xl md:text-3xl font-semibold text-sky-800 text-center mb-8">
-Daschboard  </h1>
-  </div>
+      getUserProfileToken(token)
+        .then(res => dispatch(setUser(res.data)))
+        .catch(err => console.error("Erreur auth persistante :", err));
+
+      navigate('/dashboard', { replace: true });
+    } else {
+      const storedToken = localStorage.getItem('token');
+      if (!storedToken) {
+        navigate('/login?error=unauthorized');
+      } else {
+        dispatch(fetchUserProfileFromToken());
+      }
+    }
+  }, [location.search, dispatch, navigate]);
+
+  // 🔐 Protection si non connecté
+  if (!user) {
+    return (
+      <div className="pt-24 text-center text-red-600 text-xl font-semibold">
+        Veuillez vous connecter pour accéder au tableau de bord.
+      </div>
+    );
+  }
+
+  return <div className="pt-20" />;
 }

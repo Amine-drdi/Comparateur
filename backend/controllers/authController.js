@@ -178,3 +178,23 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
+
+// Vérification du code reçu par email
+exports.profileUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur serveur', error: error.message });
+  }
+}; 
+
+exports.getAuthenticatedUser = (req, res) => {
+  res.json(req.user);
+};
