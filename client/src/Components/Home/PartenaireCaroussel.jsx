@@ -3,16 +3,16 @@ import React from 'react';
 const PartenaireCaroussel = () => {
   // Tableau des logos partenaires (remplacez par vos propres images)
   const partners = [
-    { id: 1, name: 'Néoliane', logo: '/Compagnies/Neo.webp' },
-    { id: 2, name: 'April', logo: '/Compagnies/april.png' },
-    { id: 3, name: 'Alptis', logo: '/Compagnies/alptis.png' },
-    { id: 4, name: 'Apivia', logo: '/Compagnies/apivia.png' },
-    { id: 5, name: 'Alliaz', logo: '/Compagnies/allianz.png' },
-    { id: 6, name: 'Groupama', logo: '/Compagnies/groupama.png' },
-    { id: 7, name: 'AXA', logo: '/Compagnies/AXA.png' },
-    { id: 8, name: 'Swisslife', logo: '/Compagnies/swisslife.png' },
+    { id: 1, name: 'Néoliane', logo: '/images/Compagnies/Neo.webp' },
+    { id: 2, name: 'April', logo: '/images/Compagnies/april.png' },
+    { id: 3, name: 'Alptis', logo: '/images/Compagnies/alptis.png' },
+    { id: 4, name: 'Apivia', logo: '/images/Compagnies/apivia.png' },
+    { id: 5, name: 'Alliaz', logo: '/images/Compagnies/allianz.png' },
+    { id: 6, name: 'Groupama', logo: '/images/Compagnies/groupama.png' },
+    { id: 7, name: 'AXA', logo: '/images/Compagnies/AXA.png' },
+    { id: 8, name: 'Swisslife', logo: '/images/Compagnies/swisslife.png' },
   ];
-
+ 
   // Dupliquer les partenaires pour un défilement infini fluide
   const duplicatedPartners = [...partners, ...partners];
 
@@ -46,10 +46,10 @@ const PartenaireCaroussel = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div> 
 
       {/* Styles CSS pour l'animation */}
-      <style jsx>{`
+      <style>{`
         @keyframes infinite-scroll {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }

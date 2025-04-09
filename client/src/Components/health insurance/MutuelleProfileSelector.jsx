@@ -175,7 +175,7 @@ const MutuelleProfileSelector = () => {
         {/* Image à droite */}
         <div className="w-full md:w-1/3 flex justify-center items-start">
           <img 
-            src="https://previews.123rf.com/images/olgachernyak/olgachernyak2204/olgachernyak220400121/187419474-vecteur-de-m%C3%A9decin-illustration-d-animaux-de-dessin-anim%C3%A9-lion-m%C3%A9decin-pour-enfants-avec.jpg" 
+            src="/images/icons/187419474-vecteur-de-m%C3%A9decin-illustration-d-animaux-de-dessin-anim%C3%A9-lion-m%C3%A9decin-pour-enfants-avec.jpg" 
             alt="Senior avec des lunettes en pull rouge donnant un conseil"
             className="max-w-full" 
           />

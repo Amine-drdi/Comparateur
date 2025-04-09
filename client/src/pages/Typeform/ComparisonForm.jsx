@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState,useEffect } from 'react';
 import { FaMale, FaFemale, FaUser, FaUserFriends, FaChild, FaBirthdayCake, FaMapMarkerAlt, FaCalendarAlt, FaShieldAlt, FaIdCard, FaEnvelope, FaPhone, FaCheckCircle } from 'react-icons/fa';
 import {regimesSociaux} from "../../assets/Data/regimesSociaux"
 import {codesPostaux} from "../../assets/Data/codesPostaux "
-
-function ComparisonForm() {
+import { registerDevis,getDevisById ,updateDevis } from "../../api/devisApi";  
+function ComparisonForm({ id }) {
     const [formData, setFormData] = useState({
         // Étape 1: Adhérent
         genre: '',
@@ -22,9 +21,8 @@ function ComparisonForm() {
         email: '',
         telephone: '',
         // Étape 4: Couverture
-      //  niveauRemboursement: '',
-       // accepteAppel: '',
-       // conditionsAcceptees: false
+       accepteAppel: '',
+       conditionsAcceptees: false,
        niveauRemboursement: {
         soinsCourants: '',
         hospitalisation: '',
@@ -44,11 +42,51 @@ function ComparisonForm() {
     
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
-   // const [error, setError] = useState('');
     const [error, setError] = useState({}); // Now an object
     const [step, setStep] = useState(1);
     const [filteredCodes, setFilteredCodes] = useState(codesPostaux);
-       
+    useEffect(() => {
+        if (id) {
+          const fetchDevis = async () => {
+            try {
+              const response = await getDevisById(id);
+              const data = response.data;
+      
+              setFormData({
+                genre: data.genre || '',
+                couverture: data.couverture || '',
+                dateNaissance: data.dateNaissance || '',
+                regimeSocial: data.regimeSocial || '',
+                codePostal: data.codePostal || '',
+                selectedCode: codesPostaux.find(c => c.value === data.codePostal) || null,
+                dateDebutAssurance: data.dateDebutAssurance || '',
+                typeCouverture: data.typeCouverture || '',
+                nom: data.nom || '',
+                prenom: data.prenom || '',
+                email: data.email || '',
+                telephone: data.telephone || '',
+                niveauRemboursement: {
+                  soinsCourants: data.niveauRemboursement?.soinsCourants || '',
+                  hospitalisation: data.niveauRemboursement?.hospitalisation || '',
+                  dentaire: data.niveauRemboursement?.dentaire || '',
+                  optique: data.niveauRemboursement?.optique || ''
+                },
+                accepteAppel: data.accepteAppel || '',
+                conditionsAcceptees: data.conditionsAcceptees || false
+              });
+      
+            } catch (error) {
+              console.error("Erreur lors du chargement du devis :", error);
+            }
+          };
+      
+          fetchDevis();
+          
+        }
+      }, [id]);
+      useEffect(() => {
+     }, [formData]);
+
     const handleInputChange = (e) => {
         const { value } = e.target;
         setFormData({ ...formData, codePostal: value });
@@ -85,7 +123,12 @@ function ComparisonForm() {
         setStep(6); // Redirection vers les résultats
 
         try {
-            const response = await axios.post('http://localhost:5000/api/comparaison', formData);
+           let response;
+            if (id) {
+             response = await updateDevis(id, formData);
+            } else {
+            response = await registerDevis(formData);
+            }            
             setResult(response.data);
             setStep(6); // Afficher les résultats
         } catch (err) {
@@ -209,7 +252,7 @@ function ComparisonForm() {
                                           className={`p-4 border rounded-lg flex flex-col items-center transition ${formData.genre === 'homme' ? 'border-sky-500 bg-sky-50 text-sky-800' : 'border-gray-300 hover:border-sky-300'}`}
                                       >
                                           <FaMale className="text-6xl mb-2 text-sky-800" />
-                                          <span>Homme</span>
+                                          <span>Homme</span> 
                                       </button>
                                       <button
                                           type="button"
@@ -341,7 +384,7 @@ function ComparisonForm() {
                                     onChange={handleChange}
                                     required
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                                    min={new Date().toISOString().split('T')[0]}
+                                 
                                 />
                         {error.dateDebutAssurance && <p className="text-red-500 text-sm mt-1">{error.dateDebutAssurance}</p>}
                             </div>

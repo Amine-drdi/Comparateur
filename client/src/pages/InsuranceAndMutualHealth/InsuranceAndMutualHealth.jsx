@@ -67,7 +67,7 @@ const HealthInsuranceMenuWithNavbar = () => {
           <div className="bg-blue-50 rounded p-4 mb-4">
             <div className="flex items-center gap-2 mb-4">
             <div className="mb-4 flex justify-center">
-              <img src="https://www.argusdelassurance.com/mediatheque/2/3/6/000163632_896x598_c.jpg" 
+              <img src="/images/guides/000163632_896x598_c.jpg" 
               alt="Hervé" 
               className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-full"
               />

@@ -5,7 +5,7 @@ const HealthInsuranceCTA3 = () => {
     <div className="bg-blue-100 p-6 md:p-10 flex flex-col md:flex-row items-center justify-between rounded-lg shadow-lg w-full">
       <div className="flex flex-col md:flex-row items-center md:space-x-4 w-full md:w-auto">
         <img 
-          src="https://media.istockphoto.com/id/1473835464/fr/vectoriel/croix-blanche-cercle-vert-symbole-durgence-conception-m%C3%A9dicale-illustration-vectorielle.jpg?s=612x612&w=0&k=20&c=R-berQ9WJS46J11KQnKP80-9EXP7f2SGq7kUZtluFuc=" 
+          src="/images/icons/croix-blanche-cercle-vert-symbole-durgence-conception-m%C3%A9dicale-illustration-vectorielle.jpg?s=612x612&w=0&k=20&c=R-berQ9WJS46J11KQnKP80-9EXP7f2SGq7kUZtluFuc=" 
           alt="Health Icon" 
           className="w-16 h-16 mb-4 md:mb-0" 
         />

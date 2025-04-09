@@ -62,7 +62,7 @@ const InsuranceComparison = () => {
         </div>
       </div>
       <div className="md:w-1/3 mt-6 md:mt-0 flex justify-center">
-        <img src="https://www.pngplay.com/wp-content/uploads/7/Nurse-Transparent-PNG.png" alt="Nurse Character" className="w-48 md:w-64" />
+        <img src="/images/guides/Nurse-Transparent-PNG.png" alt="Nurse Character" className="w-48 md:w-64" />
       </div>
       
     </div>
