@@ -3,115 +3,81 @@ import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
-import logo from "/images/icons/logo.png"
+
 const LiensRapide = [
-  {
-    title: "Accueil",
-    link: "/home",
-  },
-  {
-    title: "Qui sommes-nous",
-    link: "",
-  },
-  {
-    title: "Assurances",
-    link: "s",
-  },
-  {
-    title: "Contact",
-    link: "",
-  },
-  {
-    title: "Mentions légales",
-    link: "",
-  },
+  { title: "Accueil", link: "/home" },
+  { title: "Qui sommes-nous", link: "" },
+  { title: "Assurances", link: "s" },
+  { title: "Contact", link: "" },
+  { title: "Mentions légales", link: "" },
 ];
 
 const Footer = () => {
   return (
-    <div className=" bg-sky-800 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48cGF0aCBkPSJNMzAgMEw2MCAzMEwzMCA2MEwwIDMwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDU2LDE4MiwyNDUsMC4xNSkiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==')] text-white">
-      <section className="container py-10">
-        <div className="grid md:grid-cols-3 gap-8 py-5 px-36">
-          {/* Company Details */}
-          <div className="py-8 px-4">
-            <a href="#" className="flex items-center whitespace-nowrap text-2xl font-black text-black">
-        <span className="mr-2 text-4xl text-blue-500">
-                   <img src={logo} alt="Company Logo" className="h-12 w-auto" />
-        </span>
-        MonCompare
-      </a>
-          
-
-            <p className="text-sm">
-              Nous offrons une expertise approfondie et vous accompagner dans la recherche du contrat le plus adapté à votre profil.
+    <div className="bg-sky-800 text-white bg-[url('data:image/svg+xml;base64,...')]">
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 py-10">
+        {/* Main grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          {/* Company Info */}
+          <div>
+            <a href="#" className="flex items-center text-2xl font-black text-white mb-4">
+              <span className="text-3xl text-blue-500 mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91c4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5z" />
+                </svg>
+              </span>
+              MonCompare 
+            </a>
+            <p className="text-sm leading-relaxed"> 
+            
+              Nous offrons une expertise approfondie et vous accompagnons dans la recherche du contrat le plus adapté à votre profil.
             </p>
-            <br />
-           
           </div>
 
-          {/* Links + Contact Section */}
-          <div className="grid grid-cols-2 col-span-2 gap-1">
-            {/* Links */}
-            <div className="py-8 px-4">
-              <h2 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">Liens utiles</h2>
-              <ul className="flex flex-col gap-3">
-                {LiensRapide.map((link) => (
-                  <li
-                    key={link.title}
-                    className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-white"
-                  >
-                    <Link to={link.link}>{link.title}</Link>
-                  </li>
-                ))}
-              </ul>
+          {/* Liens utiles */}
+          <div>
+            <h2 className="text-xl font-bold mb-3">Liens utiles</h2>
+            <ul className="space-y-2">
+              {LiensRapide.map((link) => (
+                <li key={link.title} className="hover:text-blue-300 transition">
+                  <Link to={link.link}>{link.title}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Coordonnées */}
+          <div>
+            <h2 className="text-xl font-bold mb-3">Coordonnées</h2>
+            <div className="flex items-center gap-2 mb-2">
+              <FaPhone className="text-lg" />
+              <p className="text-sm">+33 75666333</p>
             </div>
-
-            {/* Contact Section */}
-            <div className="py-8 px-4">
-  <h2 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">Coordonnées</h2>
-  
-  {/* Téléphone */}
-  <div className="flex items-center gap-2">
-    <FaPhone className="text-lg" /> {/* Taille de l'icône ajustée si nécessaire */}
-    <p className="text-sm">+33 75666333</p>
-  </div>
-
-  {/* Email */}
-  <div className="flex items-center gap-2 mt-2">
-    <MdEmail className="text-lg" /> {/* Taille de l'icône ajustée si nécessaire */}
-    <p className="text-sm">exemple@gmail.com</p>
-  </div>
-   
-</div>
-
+            <div className="flex items-center gap-2">
+              <MdEmail className="text-lg" />
+              <p className="text-sm">exemple@gmail.com</p>
+            </div>
           </div>
         </div>
-<hr/>
-        {/* Copyright Section */}
 
-        <div className="flex items-center justify-between w-full p-4 ">
+        <hr className="border-white/20 mb-4" />
 
-  {/* Copyright */}
-  <p className="text-white font-normal text-md flex-1 text-center">
-    © 2025 LNR Finance. Tous droits réservés.
-  </p>
-
-  {/* Social Media */}
-  <div className="flex items-center gap-2">
-    <a href="/">
-      <FaInstagram className="text-2xl hover:text-primary duration-300 " />
-    </a>
-    <a href="/">
-      <FaFacebook className="text-2xl hover:text-primary duration-300 " />
-    </a>
-    <a href="/">
-      <FaLinkedin className="text-2xl hover:text-primary duration-300" />
-    </a>
-  </div>
-</div>
-
-
-      </section>
+        {/* Bottom */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center text-sm">
+          <p className="flex-1">© 2025 LNR Finance. Tous droits réservés.</p>
+          <div className="flex gap-4 justify-center">
+            <a href="/" className="hover:text-blue-300">
+              <FaInstagram className="text-xl" />
+            </a>
+            <a href="/" className="hover:text-blue-300">
+              <FaFacebook className="text-xl" />
+            </a>
+            <a href="/" className="hover:text-blue-300">
+              <FaLinkedin className="text-xl" />
+            </a>
+          </div>
+        </div>
+      </section> 
     </div>
   );
 };

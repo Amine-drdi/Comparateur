@@ -1,5 +1,7 @@
 const Devis = require('../models/Devis');
 const User = require('../models/User');
+const transporter = require('../utils/mailer');
+const getDevisEmailHTML = require('../emailTemplates/devisTemplate'); // 👈 Import du template
 
 // CREATE
 exports.createDevis = async (req, res) => {
@@ -77,18 +79,40 @@ exports.deleteDevis = async (req, res) => {
 // Get all Devis selon category
 exports.getDevisByCategoryEmail = async (req, res) => {
   try {
-    const { categorie } = req.params;
-    const { email } = req.query;
+    const { categories, email } = req.query; 
 
-    if (!email) {
-      return res.status(400).json({ message: 'Email manquant dans les paramètres de requête' });
+    if (!email || !categories) {
+      return res.status(400).json({ message: 'Email ou catégorie manquant dans les paramètres de requête' });
     }
 
-    const devis = await Devis.find({ categorie, email }); // ✅ email est une string ici
-
+    const devis = await Devis.find({ categories, email });
     res.status(200).json(devis);
   } catch (err) {
     console.error('Erreur serveur :', err);
     res.status(500).json({ error: err.message });
+  }
+};
+
+
+const sendStyledEmail = async (recipient, name, link) => {
+  const htmlContent = getDevisEmailHTML(name, link); // 👈 Appel du template dynamique
+
+  await transporter.sendMail({
+    from: '"MonApp Santé" <no-reply@monapp.com>',
+    to: recipient,
+    subject: "Votre offre santé personnalisée",
+    html: htmlContent,
+  });
+};
+
+
+exports.sendMailDevis =  async (req, res) => {
+  const { email, name, link } = req.body;
+  try {
+    await sendStyledEmail(email, name, link);
+    res.status(200).send("Email envoyé !");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Erreur lors de l'envoi de l'email");
   }
 };

@@ -39,7 +39,7 @@ const MesPreferences = () => {
           <div className="bg-white rounded-2xl shadow-md p-8 flex gap-8">
             <div className="w-1/3 flex justify-center">
               <img
-                src="./images/cle_email.png"
+                src="./images/logo/cle_email.jpg"
                 alt="Illustration"
                />
             </div>

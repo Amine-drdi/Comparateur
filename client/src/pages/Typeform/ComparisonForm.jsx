@@ -124,7 +124,7 @@ function ComparisonForm({ id }) {
 
         try {
            let response;
-            if (id) {
+            if (id) { 
              response = await updateDevis(id, formData);
             } else {
             response = await registerDevis(formData);

@@ -5,10 +5,10 @@ import { motion } from 'framer-motion';
 const Hero = () => {
   return (
     <div className="relative w-full bg-gradient-to-r from-blue-50 to-blue-100 py-20 px-6 md:px-16 lg:px-24">
-      <div className="flex flex-col-reverse items-center justify-between lg:flex-row">
+      <div className="flex flex-col-reverse lg:flex-row items-center justify-between space-y-10 lg:space-y-0">
         {/* Texte de gauche */}
-        <div className="lg:w-1/2">
-          <p className="flex items-center text-sm uppercase text-blue-600">
+        <div className="w-full lg:w-1/2 text-center lg:text-left mt-5">
+          <p className="flex justify-center lg:justify-start items-center text-sm uppercase text-blue-600">
             <FiSearch className="mr-2 h-5 w-5" /> Le comparateur d'assurances intelligent
           </p>
           <h2 className="mb-6 text-4xl font-extrabold text-blue-700 md:text-5xl lg:text-6xl">
@@ -20,7 +20,7 @@ const Hero = () => {
           <p className="text-lg text-gray-700">
             Comparez en 2 minutes les offres de plus de 30 assureurs partenaires et trouvez la meilleure protection au prix idéal.
           </p>
-          <div className="mt-8 flex space-x-4">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
             <a
               href="/"
               className="px-6 py-3 text-white bg-blue-700 rounded-lg shadow-lg hover:bg-blue-800 transition"
@@ -37,10 +37,10 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Partie droite améliorée */}
-        <div className="relative flex items-center justify-center lg:w-1/2">
+        {/* Partie droite */}
+        <div className="w-full lg:w-1/2 flex justify-center">
           <motion.div
-            className="grid grid-cols-2 gap-6 w-96 p-6 bg-white rounded-3xl shadow-xl transform hover:scale-105 transition"
+            className="grid grid-cols-2 gap-4 sm:gap-6 w-full max-w-md p-6 bg-white rounded-3xl shadow-xl transform hover:scale-105 transition"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}

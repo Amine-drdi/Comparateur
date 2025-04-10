@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
   const [devisData, setDevisData] = useState({
     sante: [],
     auto: [],
-    moto: [],
+    moto: [], 
     habitation: [] 
   });
 
@@ -23,6 +23,8 @@ import { useNavigate } from 'react-router-dom';
   ];
 
   useEffect(() => {
+
+
     const fetchDevis = async () => {
       try {
         const data = await getDevisByCategory(tab, user.email);

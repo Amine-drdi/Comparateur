@@ -59,8 +59,12 @@ router.get('/profile/:id', authController.profileUser);
 // modifier  utilisateur 
 router.put('/profile/:id', authController.updateUser); 
 
+// delete  utilisateur 
+router.put('/profile/:id', authController.deleteUserAndDevis); 
+
 // récupères  utilisateur selon token
 router.get('/me', verifyToken, authController.getAuthenticatedUser);
 
+router.delete('/profile/:id', authController.deleteUserAndDevis);
 
 module.exports = router;

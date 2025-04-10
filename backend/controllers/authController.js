@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const Devis = require('../models/Devis');
+
 const AuthCode = require('../models/AuthCode');
 const transporter = require('../utils/mailer');
 const { generateCode } = require('../utils/codeGenerator');
@@ -217,5 +219,34 @@ exports.updateUser = async (req, res) => {
   } catch (err) {
     console.error('Erreur lors de la mise à jour du profil:', err);
     return res.status(500).json({ message: 'Erreur serveur lors de la mise à jour.' });
+  }
+};
+
+exports.deleteUserAndDevis = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    // 1. Récupérer l'utilisateur pour obtenir son email
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur introuvable." });
+    }
+
+    const userEmail = user.email;
+
+    // 2. Supprimer les devis contenant cet email
+    const devisResult = await Devis.deleteMany({ email: userEmail });
+
+    // 3. Supprimer l'utilisateur
+    const userResult = await User.findByIdAndDelete(userId);
+
+    return res.status(200).json({
+      message: "Utilisateur et devis associés supprimés avec succès.",
+      deletedUser: userResult,
+      deletedDevisCount: devisResult.deletedCount,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la suppression :", error);
+    return res.status(500).json({ message: "Erreur serveur." });
   }
 };

@@ -20,7 +20,7 @@ export default function Dashboard() {
       dispatch(fetchUserProfileFromToken());
 
       getUserProfileToken(token)
-        .then(res => dispatch(setUser(res.data)))
+        .then(user => dispatch(setUser(user))) 
         .catch(err => console.error("Erreur auth persistante :", err));
 
       navigate('/dashboard', { replace: true });

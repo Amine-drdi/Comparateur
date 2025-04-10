@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getUserProfile, updateUserProfile } from '../../api/authApi';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserProfile, updateUserProfile, deleteUserProfile } from '../../api/authApi';
+import { useNavigate } from 'react-router-dom';
 
 export default function MesInformations() {
   const [userInfo, setUserInfo] = useState(null);
-  const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -30,14 +32,29 @@ export default function MesInformations() {
     setUserInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = async () => {
+  const handleUpdate = async () => {
     try {
       await updateUserProfile(user._id, userInfo);
       setSuccessMessage("Informations mises à jour avec succès.");
-      setEditMode(false);
     } catch (err) {
       console.error(err);
       setError("Une erreur est survenue lors de la mise à jour.");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm("Es-tu sûre de vouloir supprimer ton compte ? Cette action est irréversible.");
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteUserProfile(user._id);
+
+      dispatch({ type: "LOGOUT" }); // adapte à ton reducer
+      navigate('/');
+    } catch (error) {
+      console.error('Erreur suppression :', error);
+      alert("Erreur lors de la suppression du compte.");
     }
   };
 
@@ -63,105 +80,41 @@ export default function MesInformations() {
         </div>
 
         <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">Prénom</label>
+          {[
+            { label: 'Prénom', name: 'prenom', type: 'text' },
+            { label: 'Nom', name: 'nom', type: 'text' },
+            { label: 'Adresse e-mail', name: 'email', type: 'email' },
+            { label: 'Code postal ou ville', name: 'codePostal', type: 'text' },
+            { label: 'Adresse', name: 'address', type: 'text' },
+            { label: 'Téléphone', name: 'telephone', type: 'text' },
+          ].map(({ label, name, type }) => (
+            <div key={name}>
+              <label className="block mb-1 text-sm font-medium text-gray-700">{label}</label>
               <input
-                type="text"
-                name="prenom"
-                value={userInfo.prenom || ''}
+                type={type}
+                name={name}
+                value={userInfo[name] || ''}
                 onChange={handleChange}
-                 
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-            <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">Nom</label>
-              <input
-                type="text"
-                name="nom"
-                value={userInfo.nom || ''}
-                onChange={handleChange}
-                 
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div>
-          </div>
+          ))}
 
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Adresse e-mail</label>
-            <input
-              type="email"
-              name="email"
-              value={userInfo.email || ''}
-              onChange={handleChange}
-               
-              className="w-full px-4 py-2 border rounded-lg"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Code postal ou ville</label>
-            <input
-              type="text"
-              name="codePostal"
-              value={userInfo.codePostal || ''}
-              onChange={handleChange}
-               
-              className="w-full px-4 py-2 border rounded-lg"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Adresse</label>
-            <input
-              type="text"
-              name="address"
-              value={userInfo.address || ''}
-              onChange={handleChange}
-               
-              className="w-full px-4 py-2 border rounded-lg"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Téléphone</label>
-            <input
-              type="text"
-              name="telephone"
-              value={userInfo.telephone || ''}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg"
-            />
-          </div>
-
-          <div className="pt-4 flex gap-4">
-            {!editMode ? (
-              <button
-                type="button"
-                onClick={() => setEditMode(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow"
-              >
-                Modifier
-              </button>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  onClick={handleSave}
-                  className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl shadow"
-                >
-                  Enregistrer
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEditMode(false)}
-                  className="bg-gray-400 hover:bg-gray-500 text-white font-semibold px-6 py-3 rounded-xl shadow"
-                >
-                  Annuler
-                </button>
-              </>
-            )}
+          <div className="pt-4 flex gap-4 flex-wrap">
+            <button
+              type="button"
+              onClick={handleUpdate}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow"
+            >
+              Modifier
+            </button>
+            <button
+              type="button"
+              onClick={handleDeleteAccount}
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl shadow"
+            >
+              Supprimer mon compte
+            </button>
           </div>
         </form>
       </div>

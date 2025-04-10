@@ -15,6 +15,7 @@ const AllGuides  = React.lazy(()  => import("./Components/GuideDetail/AllGuids")
 const AuthPage  = React.lazy(()  => import("./pages/user/AuthPage"));
 const VerifyCodePage  = React.lazy(()  => import("./pages/user/VerifyCodePage"));
 const Dashboard  = React.lazy(()  => import("./pages/user/DashboardPage"));
+const ExpiredOffersList  = React.lazy(()  => import("./pages/ExpiredOffersList"));
 
  
 const AppRoutes = () => {
@@ -87,6 +88,12 @@ const AppRoutes = () => {
                   element={
                   <React.Suspense fallback={<LoadingSpinner/>}>
                   <Dashboard/>
+                  </React.Suspense>}
+                 />
+                       <Route path="/ExpiredOffersList"
+                  element={
+                  <React.Suspense fallback={<LoadingSpinner/>}>
+                  <ExpiredOffersList/>
                   </React.Suspense>}
                  />
       </Routes>

@@ -44,7 +44,7 @@ export const getUserProfileToken = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
+     return response.data;
   } catch (error) {
     console.error('Erreur lors de la récupération du profil utilisateur :', error);
     throw error;
@@ -63,6 +63,22 @@ export const updateUserProfile = async (id, userData) => {
 
   if (!response.ok) {
     throw new Error('Erreur lors de la mise à jour du profil utilisateur.');
+  }
+
+  return await response.json();
+};
+export const deleteUserProfile = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/auth/profile/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      // Authorization: `Bearer ${token}` si besoin
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Erreur suppression utilisateur");
   }
 
   return await response.json();
