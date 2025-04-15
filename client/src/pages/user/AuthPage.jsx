@@ -16,19 +16,14 @@ export default function AuthPage() {
       setMessage("❌ Utilisateur non trouvé, veuillez vous inscrire");
     }
   }, [location]);
-  /*const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-       await sendCode(email); // appel API
+      await sendCode(email); // appel API
       navigate('/verify-code', { state: { email } }); // transmettre l'email
     } catch (err) {
       setMessage(`❌ ${err.message}`);
     }
-  };
-  */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("✅ Navigation vers /verify-code");
   };
 
   return (

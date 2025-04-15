@@ -4,7 +4,7 @@ const MesPreferences = () => {
   const [activeTab, setActiveTab] = useState("emailing");
   const [newsletter, setNewsletter] = useState(false);
   const [alerts, setAlerts] = useState(true);
-  const email = "sirineazzouzi5@gmail.com";
+  const email = "mohamedtahacherchari@gmail.com";
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
