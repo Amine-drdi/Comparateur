@@ -1,14 +1,14 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "node server.js",
-    "seed": "node seed.js",
-    "dev": "nodemon server.js",
+    "start": "node server.ts",
+    "seed": "node seed.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "test": "mocha --exit"
   },
-  "keywords": [],   
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
@@ -28,5 +28,11 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
 }
