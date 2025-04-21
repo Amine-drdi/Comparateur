@@ -1,156 +1,250 @@
-import React, { useState ,useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
-import { FaMale, FaFemale, FaUser, FaUserFriends, FaChild, FaBirthdayCake, FaMapMarkerAlt, FaCalendarAlt, FaShieldAlt, FaIdCard, FaEnvelope, FaPhone, FaCheckCircle } from 'react-icons/fa';
-import {regimesSociaux} from "../../assets/mutuelle-sante/Data/regimesSociaux"
-import {codesPostaux} from "../../assets/mutuelle-sante/Data/codesPostaux "
-import { registerDevis,getDevisById ,updateDevis } from "../../api/devisApi";  
-import femmeImg from '../../assets/Accueil/images/compareImage/woman.png'
+import {
+  FaCheckCircle
+} from 'react-icons/fa';
+import {
+  regimesSociaux
+} from "../../assets/mutuelle-sante/Data/regimesSociaux";
+import {
+  codesPostaux
+} from "../../assets/mutuelle-sante/Data/codesPostaux";
+import {
+  registerDevis,
+  getDevisById,
+  updateDevis
+} from "../../api/devisApi";
+
+import femmeImg from '../../assets/Accueil/images/compareImage/woman.png';
 import hommeImg from '../../assets/Accueil/images/compareImage/man.png';
 import vousImg from '../../images/compareImage/man.png';
 import conjointImg from '../../assets/Accueil/images/compareImage/icon-couple.DNy2uJdQ.png';
 import enfantsImg from '../../assets/Accueil/images/compareImage/icon-single-with-children.DyCgMNJT.png';
 import familleImg from '../../assets/Accueil/images/compareImage/icon-family.C0um2KMM.png';
-import coordonneesImg from '../../images/compareImage/map-icon.DHPnNESI.png';
-import maisonImg from '../../images/compareImage/house.png';
-import calandrierImg from '../../assets/mutuelle-sante/images/calandrier.png'
-import codePostale from '../../assets/mutuelle-sante/images/codePostale.png'
-import assurance from '../../assets/mutuelle-sante/images/assurance.png'
-import nom from "../../assets/mutuelle-sante/images/nom.png"
-import mail from "../../assets/mutuelle-sante/images/mail.png"
-import phone from "../../assets/mutuelle-sante/images/phone.png"
+import calandrierImg from '../../assets/mutuelle-sante/images/calandrier.png';
+import codePostale from '../../assets/mutuelle-sante/images/codePostale.png';
+import assurance from '../../assets/mutuelle-sante/images/assurance.png';
+import nomIcon from "../../assets/mutuelle-sante/images/nom.png";
+import mailIcon from "../../assets/mutuelle-sante/images/mail.png";
+import phoneIcon from "../../assets/mutuelle-sante/images/phone.png";
 
-function CompareMutuelleSante({ id }) {
-    const [formData, setFormData] = useState({
-        // Étape 1: Adhérent
-        genre: '',
-        couverture: '',
-        dateNaissance: '',
-        regimeSocial: '',
-        // Étape 2: Contratss
-        codePostal: '',
-        selectedCode: null,
-        dateDebutAssurance: '',
-        typeCouverture: '',
-        // Étape 3: Coordonnées
-        nom: '',
-        prenom: '',
-        email: '',
-        telephone: '',
-        // Étape 4: Couverture
-       accepteAppel: '',
-       conditionsAcceptees: false,
-       niveauRemboursement: {
+// Types
+type Props = {
+  id?: string;
+};
+
+type NiveauRemboursement = {
+  soinsCourants: string;
+  hospitalisation: string;
+  dentaire: string;
+  optique: string;
+};
+
+type FormData = {
+  genre: string;
+  couverture: string;
+  dateNaissance: string;
+  regimeSocial: string;
+  codePostal: string;
+  selectedCode: CodePostalOption;
+  dateDebutAssurance: string;
+  typeCouverture: string;
+  nom: string;
+  prenom: string;
+  email: string;
+  telephone: string;
+  accepteAppel: string;
+  conditionsAcceptees: boolean;
+  niveauRemboursement: NiveauRemboursement;
+};
+type DevisPayload = Omit<FormData, 'selectedCode'>;
+
+type ResultatDevis = {
+  minimale?: {
+    prix: number;
+    description: string;
+  };
+  equilibree?: {
+    prix: number;
+    description: string;
+  };
+  maximale?: {
+    prix: number;
+    description: string;
+  };
+};
+
+type CodePostalOption = {
+  value: string;
+  label: string;
+} | null;
+
+type FieldErrors = {
+  [key: string]: string;
+};
+
+function CompareMutuelleSante({ id }: Props) {
+    const [formData, setFormData] = useState<FormData>({
+      genre: '',
+      couverture: '',
+      dateNaissance: '',
+      regimeSocial: '',
+      codePostal: '',
+      selectedCode: null,
+      dateDebutAssurance: '',
+      typeCouverture: '',
+      nom: '',
+      prenom: '',
+      email: '',
+      telephone: '',
+      accepteAppel: '',
+      conditionsAcceptees: false,
+      niveauRemboursement: {
         soinsCourants: '',
         hospitalisation: '',
         dentaire: '',
-        optique: ''
-    },
+        optique: '',
+      },
     });
-    const handleNiveauChange = (categorie, valeur) => {
-        setFormData(prev => ({
-            ...prev,
-            niveauRemboursement: {
-                ...prev.niveauRemboursement,
-                [categorie]: valeur
-            }
-        }));
-    };
-    
-    const [result, setResult] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState({}); // Now an object
-    const [step, setStep] = useState(1);
+  
+    const [result, setResult] = useState<ResultatDevis | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<FieldErrors>({});
+    const [step, setStep] = useState<number>(1);
     const [filteredCodes, setFilteredCodes] = useState(codesPostaux);
+  
     useEffect(() => {
-        if (id) {
-          const fetchDevis = async () => {
-            try {
-              const response = await getDevisById(id);
-              const data = response.data;
-      
-              setFormData({
-                genre: data.genre || '',
-                couverture: data.couverture || '',
-                dateNaissance: data.dateNaissance || '',
-                regimeSocial: data.regimeSocial || '',
-                codePostal: data.codePostal || '',
-                selectedCode: codesPostaux.find(c => c.value === data.codePostal) || null,
-                dateDebutAssurance: data.dateDebutAssurance || '',
-                typeCouverture: data.typeCouverture || '',
-                nom: data.nom || '',
-                prenom: data.prenom || '',
-                email: data.email || '',
-                telephone: data.telephone || '',
-                niveauRemboursement: {
-                  soinsCourants: data.niveauRemboursement?.soinsCourants || '',
-                  hospitalisation: data.niveauRemboursement?.hospitalisation || '',
-                  dentaire: data.niveauRemboursement?.dentaire || '',
-                  optique: data.niveauRemboursement?.optique || ''
-                },
-                accepteAppel: data.accepteAppel || '',
-                conditionsAcceptees: data.conditionsAcceptees || false
-              });
-      
-            } catch (error) {
-              console.error("Erreur lors du chargement du devis :", error);
-            }
-          };
-      
-          fetchDevis();
-          
-        }
-      }, [id]);
-      useEffect(() => {
-     }, [formData]);
-
-    const handleInputChange = (e) => {
-        const { value } = e.target;
-        setFormData({ ...formData, codePostal: value });
-    
-        // Filtrer les codes postaux
-        if (value) {
-            const filtered = codesPostaux.filter((code) =>
-                code.value.includes(value) || code.label.toLowerCase().includes(value.toLowerCase())
-            );
-            setFilteredCodes(filtered);
-        } else {
-            setFilteredCodes(codesPostaux);
-        }
+      if (id) {
+        const fetchDevis = async () => {
+          try {
+            const response = await getDevisById(id);
+            const data = response.data;
+            setFormData({
+              genre: data.genre || '',
+              couverture: data.couverture || '',
+              dateNaissance: data.dateNaissance || '',
+              regimeSocial: data.regimeSocial || '',
+              codePostal: data.codePostal || '',
+              selectedCode: codesPostaux.find(c => c.value === data.codePostal) || null,
+              dateDebutAssurance: data.dateDebutAssurance || '',
+              typeCouverture: data.typeCouverture || '',
+              nom: data.nom || '',
+              prenom: data.prenom || '',
+              email: data.email || '',
+              telephone: data.telephone || '',
+              niveauRemboursement: {
+                soinsCourants: data.niveauRemboursement?.soinsCourants || '',
+                hospitalisation: data.niveauRemboursement?.hospitalisation || '',
+                dentaire: data.niveauRemboursement?.dentaire || '',
+                optique: data.niveauRemboursement?.optique || ''
+              },
+              accepteAppel: data.accepteAppel || '',
+              conditionsAcceptees: data.conditionsAcceptees || false
+            });
+          } catch (error) {
+            console.error("Erreur lors du chargement du devis :", error);
+          }
+        };
+  
+        fetchDevis();
+      }
+    }, [id]);
+  
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      setFormData({ ...formData, codePostal: value });
+  
+      if (value) {
+        const filtered = codesPostaux.filter((code) =>
+          code.value.includes(value) || code.label.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredCodes(filtered);
+      } else {
+        setFilteredCodes(codesPostaux);
+      }
     };
-    
-    const handleSelectCode = (code) => {
-        setFormData({
-            ...formData,
-            codePostal: code.value,
-            selectedCode: code,
-        });
-        setFilteredCodes([]);
+  
+    const handleSelectCode = (code: Exclude<CodePostalOption, null>) => {
+      setFormData({
+        ...formData,
+        codePostal: code.value,
+        selectedCode: code,
+      });
+      setFilteredCodes([]);
     };
-
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+  
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
     };
-
-    const handleSubmit = async (e) => {
+  
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setError('');
+        setError({});
         setResult(null);
-        setStep(6); // Redirection vers les résultats
-
+        setStep(6); // Affiche les résultats
+      
+        // Enlève selectedCode avant l'envoi
+       // const { selectedCode, ...dataToSend }: DevisPayload = formData;
+       const { selectedCode, ...dataToSend } = formData;
         try {
-           let response;
-            if (id) { 
-             response = await updateDevis(id, formData);
-            } else {
-            response = await registerDevis(formData);
-            }            
-            setResult(response.data);
-            setStep(6); // Afficher les résultats
+          let response;
+          if (id) {
+            response = await updateDevis(id, dataToSend);
+          } else {
+            response = await registerDevis(dataToSend);
+          }
+          setResult(response.data);
         } catch (err) {
-            setError('Erreur lors de la récupération des résultats.');
-            setLoading(false);
+          setError({ general: "Erreur lors de la récupération des résultats." });
+          setLoading(false);
         }
+      };
+  
+    const handleNiveauChange = (categorie: keyof NiveauRemboursement, valeur: string) => {
+      setFormData(prev => ({
+        ...prev,
+        niveauRemboursement: {
+          ...prev.niveauRemboursement,
+          [categorie]: valeur
+        }
+      }));
+    };
+  
+    const nextStep = () => {
+      const errors: FieldErrors = {};
+  
+      if (step === 1) {
+        if (!formData.genre) errors.genre = "Genre requis";
+        if (!formData.couverture) errors.couverture = "Couverture requise";
+        if (!formData.dateNaissance) errors.dateNaissance = "Date de naissance requise";
+        if (!formData.regimeSocial) errors.regimeSocial = "Régime social requis";
+      } else if (step === 2) {
+        if (!formData.codePostal) errors.codePostal = "Code postal requis";
+        if (!formData.dateDebutAssurance) errors.dateDebutAssurance = "Date requise";
+        if (!formData.typeCouverture) errors.typeCouverture = "Type de couverture requis";
+      } else if (step === 3) {
+        if (!formData.nom) errors.nom = "Nom requis";
+        if (!formData.prenom) errors.prenom = "Prénom requis";
+        if (!formData.email) errors.email = "Email requis";
+        if (!formData.telephone) errors.telephone = "Téléphone requis";
+      } else if (step === 4) {
+        if (!formData.niveauRemboursement.soinsCourants) errors.soinsCourants = 'Niveau requis';
+        if (!formData.niveauRemboursement.hospitalisation) errors.hospitalisation = 'Niveau requis';
+        if (!formData.niveauRemboursement.dentaire) errors.dentaire = 'Niveau requis';
+        if (!formData.niveauRemboursement.optique) errors.optique = 'Niveau requis';
+        if (!formData.accepteAppel) errors.accepteAppel = 'Choix requis';
+        if (!formData.conditionsAcceptees) errors.conditionsAcceptees = 'Condition requise';
+      }
+  
+      if (Object.keys(errors).length > 0) {
+        setError(errors);
+        return;
+      }
+  
+      setError({});
+      setStep(step + 1);
     };
     const stepsData = [
         { label: 'Adhérent', number: 1 },
@@ -160,64 +254,37 @@ function CompareMutuelleSante({ id }) {
         { label: 'Vérification', number: 5 },
       ];
       
-    const nextStep = () => {
-        let errors = {};
-        
-        if (step === 1) {
-            if (!formData.genre) errors.genre = 'Veuillez sélectionner un genre';
-            if (!formData.couverture) errors.couverture = 'Veuillez sélectionner une couverture';
-            if (!formData.dateNaissance) errors.dateNaissance = 'Veuillez entrer votre date de naissance';
-            if (!formData.regimeSocial) errors.regimeSocial = 'Veuillez sélectionner un régime social';
-        } else if (step === 2) {
-            if (!formData.codePostal) errors.codePostal = 'Veuillez entrer un code postal';
-            if (!formData.dateDebutAssurance) errors.dateDebutAssurance = 'Veuillez sélectionner une date';
-            if (!formData.typeCouverture) errors.typeCouverture = 'Veuillez choisir un type de couverture';
-        } else if (step === 3) {
-            if (!formData.nom) errors.nom = 'Veuillez entrer votre nom';
-            if (!formData.prenom) errors.prenom = 'Veuillez entrer votre prénom';
-            if (!formData.email) errors.email = 'Veuillez entrer votre email';
-            if (!formData.telephone) errors.telephone = 'Veuillez entrer votre téléphone';
-        } else if (step === 4) {
-            if (!formData.niveauRemboursement.soinsCourants) errors.soinsCourants = 'Sélectionnez un niveau';
-            if (!formData.niveauRemboursement.hospitalisation) errors.hospitalisation = 'Sélectionnez un niveau';
-            if (!formData.niveauRemboursement.dentaire) errors.dentaire = 'Sélectionnez un niveau';
-            if (!formData.niveauRemboursement.optique) errors.optique = 'Sélectionnez un niveau';
-            if (!formData.accepteAppel) errors.accepteAppel = 'Ce champ est requis';
-            if (!formData.conditionsAcceptees) errors.conditionsAcceptees = 'Vous devez accepter les conditions';
-        }
-
-        if (Object.keys(errors).length > 0) {
-            setError(errors);
-            return;
-        }
-        setError({});
-        setStep(step + 1);
+    const prevStep = () => setStep(step - 1);
+  
+    const getRegimeSocialLabel = (value: string) => {
+      switch (value) {
+        case 'salarie':
+          return 'Salarié';
+        case 'sans_emploi':
+          return 'Sans emploi';
+        case 'retraite':
+          return 'Retraité';
+        case 'fonctionnaire':
+          return 'Fonctionnaire';
+        default:
+          return value;
+      }
     };
-
-    const prevStep = () => {
-        setStep(step - 1);
+  
+    const getCouvertureLabel = (value: string) => {
+      switch (value) {
+        case 'adulte':
+          return 'Un adulte';
+        case 'adulte_enfant':
+          return 'Adulte + enfant';
+        case 'couple':
+          return 'Un couple';
+        case 'couple_enfant':
+          return 'Couple + enfant';
+        default:
+          return value;
+      }
     };
-
-    const getRegimeSocialLabel = (value) => {
-        switch(value) {
-            case 'salarie': return 'Salarié';
-            case 'sans_emploi': return 'Sans emploi';
-            case 'retraite': return 'Retraité ancien salarié';
-            case 'fonctionnaire': return 'Fonctionnaire d\'état';
-            default: return value;
-        }
-    };
-
-    const getCouvertureLabel = (value) => {
-        switch(value) {
-            case 'adulte': return 'Un adulte';
-            case 'adulte_enfant': return 'Un adulte + enfant';
-            case 'couple': return 'Un couple';
-            case 'couple_enfant': return 'Un couple + enfant';
-            default: return value;
-        }
-    };
-
     return (
         <div className="max-w-3xl mx-auto my-10 p-6 bg-white rounded-xl shadow-md">
             <h1 className="text-2xl md:text-3xl font-semibold text-sky-800 text-center mb-8">
@@ -469,7 +536,7 @@ function CompareMutuelleSante({ id }) {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label className="block text-gray-700 font-semibold mb-2 flex items-center">
-                                        <img src={nom} className="w-10 h-10 mr-2" alt="icon" />
+                                        <img src={nomIcon} className="w-10 h-10 mr-2" alt="icon" />
 
                                             Nom
                                         </label>
@@ -485,7 +552,7 @@ function CompareMutuelleSante({ id }) {
                                     </div>
                                     <div>
                                         <label className="block text-gray-700 font-semibold mb-2 flex items-center">
-                                        <img src={nom} className="w-10 h-10 mr-2" alt="icon" />
+                                        <img src={nomIcon} className="w-10 h-10 mr-2" alt="icon" />
 
                                             Prénom
                                         </label>
@@ -504,7 +571,7 @@ function CompareMutuelleSante({ id }) {
             
                                 <div>
                                     <label className="block text-gray-700 font-semibold mb-2 flex items-center">
-                                    <img src={mail} className="w-10 h-10 mr-2" alt="icon" />
+                                    <img src={mailIcon} className="w-10 h-10 mr-2" alt="icon" />
 
                                         Email
                                     </label>
@@ -521,7 +588,7 @@ function CompareMutuelleSante({ id }) {
             
                                 <div>
                                     <label className="block text-gray-700 font-semibold mb-2 flex items-center">
-                                    <img src={phone} className="w-10 h-10 mr-2" alt="icon" />
+                                    <img src={phoneIcon} className="w-10 h-10 mr-2" alt="icon" />
 
                                         Téléphone
                                     </label>

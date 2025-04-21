@@ -28,6 +28,7 @@ const AllGuidesDentaire  = React.lazy(()  => import("./Components/dentaire/Guide
 const Dentaire  = React.lazy(()  => import("./pages/dentaire/Dentaire"));
 const Accueil  = React.lazy(()  => import("./pages/Accueil/Accueil"));
 const DevisMutuelleForm = React.lazy(()  => import("./Components/Accueil/DevisMutuelleFormForMan"));
+//const Orthodontie = React.lazy(()  => import("./pages/orthodontie/O"));
 
 
 

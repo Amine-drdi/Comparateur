@@ -6,7 +6,7 @@ import AssuranceBanner from '../../Components/optique/AssuranceBanner';
 //import  Footer from '../../Components/mutuelle-entreprises/Footer';
 import InsuranceBrands from '../../Components/optique/InsuranceBrands'
 import Guides from '../../Components/optique/Guide/Guides';
-export default function Optique() {
+export default function Orthodontie() {
   return (
     <div className="min-h-screen bg-gray-100">
    {/* Main content */}
