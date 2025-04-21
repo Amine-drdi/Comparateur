@@ -66,8 +66,8 @@ export default function Accueil() {
       </div>
     </section>
     <InsuranceBrands/>
-    <HealthInsuranceMenuWithNavbar/>
-    <ComparateurMutuelle/>
+   <HealthInsuranceMenuWithNavbar/>
+    {/*<ComparateurMutuelle/>*/}
     <EtapesEtComparatif/>
     <ComprendreMonDevis/>
     <FacteursPrixMutuelle/>

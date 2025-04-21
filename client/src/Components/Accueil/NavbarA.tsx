@@ -129,6 +129,7 @@ const NavbarA: React.FC = () => {
               <li><Link to="/mutuelleEntreprise" onClick={toggleMenu}>Mutuelle d'entreprise</Link></li>
               <li><Link to="/optique" onClick={toggleMenu}>Besoin optique</Link></li>
               <li><Link to="/dentaire" onClick={toggleMenu}>Besoin dentaire</Link></li>
+              <li><Link to="/orthodontie" onClick={toggleMenu}>Besoin orthodontie</Link></li>
               <li><Link to="/expatries" onClick={toggleMenu}>Assurance santé expatriés</Link></li>
             </ul>
           </div>
