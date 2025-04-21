@@ -7,21 +7,7 @@ import AssuranceBanner from '../../Components/mutuelle-entreprises/AssuranceBann
 export default function MutuelleEntreprise() {
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="font-bold text-xl text-blue-800">AssurSanté</div>
-          <nav>
-            <ul className="flex space-x-6">
-              <li className="text-gray-700 hover:text-blue-600 cursor-pointer">Accueil</li>
-              <li className="text-gray-700 hover:text-blue-600 cursor-pointer">Nos offres</li>
-              <li className="text-gray-700 hover:text-blue-600 cursor-pointer">Entreprises</li>
-              <li className="text-gray-700 hover:text-blue-600 cursor-pointer">Contact</li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
+ 
       {/* Main content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Notre bannière de mutuelle entreprise */}

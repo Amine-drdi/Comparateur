@@ -1,30 +1,40 @@
-import React, { createContext, useState, useContext } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 
-// Créer un contexte pour l'authentification
-const AuthContext = createContext();
+// 👉 Définition du type du contexte
+interface AuthContextType {
+  isAuthenticated: boolean;
+  checkAuth: () => void;
+  logout: () => void;
+}
 
-// Créer un fournisseur de contexte pour envelopper l'application
-export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+// 👉 Contexte typé (initialisé comme undefined pour sécuriser)
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-  // Vérifie si le token est présent dans le stockage local
+// 👉 Typage des props de AuthProvider
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
   const checkAuth = () => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
+    setIsAuthenticated(!!token);
   };
 
-  // Appelle cette fonction pour se déconnecter
   const logout = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
   };
 
-  // Utilisation de useEffect pour vérifier l'authentification au démarrage
-  React.useEffect(() => {
+  useEffect(() => {
     checkAuth();
   }, []);
 
@@ -35,5 +45,12 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook personnalisé pour utiliser le contexte d'authentification
-export const useAuth = () => useContext(AuthContext);
+// ✅ Hook personnalisé avec gestion d'erreur
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+

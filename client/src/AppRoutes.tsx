@@ -5,7 +5,7 @@ import LoadingSpinner from "./Components/mutuelle-sante/health insurance/Loading
 
 const Home = React.lazy(() => import("./pages/Home/Home"));
 const CompareMutuelleSante= React.lazy(() => import("./pages/Compare/CompareMutuelleSante"));
-const InsuranceComponent = React.lazy(() => import("./pages/InsuranceAndMutualHealth"));
+const InsuranceComponent = React.lazy(() => import("./Components/Accueil/InsuranceAndMutualHealth"));
 const InsuranceComparison = React.lazy(() => import("./pages/mutuelle-sante/health insurance/HealthInsurance"));
 const MutuelleArticles = React.lazy(()  => import("./Components/mutuelle-sante/health insurance/MutuelleArticles"));
 const GuideDetail = React.lazy(()  => import("./Components/mutuelle-sante/GuideDetail/GuideDetail"));
@@ -22,7 +22,9 @@ const AuthPage  = React.lazy(()  => import("./pages/user/AuthPage"));
 const VerifyCodePage  = React.lazy(()  => import("./pages/user/VerifyCodePage"));
 const Dashboard  = React.lazy(()  => import("./pages/user/DashboardPage"));
 const GuideDetailOptique = React.lazy(()  => import("./Components/optique/GuideDetail/GuideDetail"));
+const GuideDetailDentaire = React.lazy(()  => import("./Components/dentaire/GuideDetail/GuideDetail"));
 const AllGuidesOptique  = React.lazy(()  => import("./Components/optique/GuideDetail/AllGuids"));
+const AllGuidesDentaire  = React.lazy(()  => import("./Components/dentaire/GuideDetail/AllGuids"));
 const Dentaire  = React.lazy(()  => import("./pages/dentaire/Dentaire"));
 const Accueil  = React.lazy(()  => import("./pages/Accueil/Accueil"));
 const DevisMutuelleForm = React.lazy(()  => import("./Components/Accueil/DevisMutuelleFormForMan"));
@@ -32,11 +34,11 @@ const DevisMutuelleForm = React.lazy(()  => import("./Components/Accueil/DevisMu
 const AppRoutes = () => {
   return (
     <Routes>
-    <Route path="/" element={<Navigate to="/Home" />} />
-       <Route path="/Home"
+    <Route path="/" element={<Navigate to="/Accueil" />} />
+       <Route path="/Accueil"
               element={
                <React.Suspense fallback={<LoadingSpinner />}>
-                <Home/>
+                <Accueil/>
                </React.Suspense>}
                  />
                   <Route path="/login"
@@ -60,7 +62,7 @@ const AppRoutes = () => {
        <Route path="/compare"
               element={
                <React.Suspense fallback={<LoadingSpinner />}>
-                <CompareMutuelleSante/>
+                <CompareMutuelleSante id={undefined}/>
                </React.Suspense>}
                  />
                  <Route path="/InsuranceComponent"
@@ -93,6 +95,12 @@ const AppRoutes = () => {
                   <GuideDetailOptique/>
                   </React.Suspense>}
                  />
+                 <Route path="/guideDentaire/:id"
+                  element={
+                  <React.Suspense fallback={<LoadingSpinner/>}>
+                  <GuideDetailDentaire/>
+                  </React.Suspense>}
+                 />
                   <Route path="/AllGuides"
                   element={
                   <React.Suspense fallback={<LoadingSpinner/>}>
@@ -103,6 +111,12 @@ const AppRoutes = () => {
                   element={
                   <React.Suspense fallback={<LoadingSpinner/>}>
                   <AllGuidesOptique/>
+                  </React.Suspense>}
+                 />
+                  <Route path="/AllGuidesDentaire"
+                  element={
+                  <React.Suspense fallback={<LoadingSpinner/>}>
+                  <AllGuidesDentaire/>
                   </React.Suspense>}
                  />
                    <Route path="/healthSection/:id"

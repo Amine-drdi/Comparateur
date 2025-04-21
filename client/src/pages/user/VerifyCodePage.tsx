@@ -1,28 +1,54 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../redux/authSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
+import type { RootState, AppDispatch } from '../../redux/store';
 
 export default function VerifyCode() {
   const [code, setCode] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>(); // ✅ Dispatch typé
   const navigate = useNavigate();
   const location = useLocation();
 
   const email = location.state?.email;
-  const { user, loading, error } = useSelector((state) => state.auth);
+  const { user, loading, error } = useSelector((state: RootState) => state.auth); // ✅ Selector typé
+  const token = useSelector((state: any) => state.auth.token);
 
-  const handleSubmit = async (e) => {
+  /*const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loginUser({ email, code }));
+    if (email && code) {
+      dispatch(loginUser({ email, code }));
+    }
+  };*/
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (email && code) {
+      // Add this for debugging
+      console.log('Submitting code verification with:', { email, code });
+      
+      const result = await dispatch(loginUser({ email, code }));
+      
+      // Add this to check what's returned from the thunk
+      console.log('Login result:', result);
+      
+      // Check if the login was rejected
+      if (loginUser.rejected.match(result)) {
+        console.error('Login rejected:', result.payload);
+      }
+    }
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (user) {
-      navigate('/dashboard'); // redirige une fois connecté
+      navigate('/dashboard');
     }
   }, [user, navigate]);
-
+*/
+useEffect(() => {
+  if (user && token) { // Check for both user and token
+    navigate('/dashboard');
+  }
+}, [user, token, navigate]);
   return (
     <div className="p-6 max-w-md mx-auto mt-20">
       <h2 className="text-2xl font-bold mb-4">Vérification du code</h2>

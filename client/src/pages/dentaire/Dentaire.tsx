@@ -5,7 +5,7 @@ import QuestionsSection  from '../../Components/dentaire/QuestionsSection'
 import AssuranceBanner from '../../Components/optique/AssuranceBanner';
 //import  Footer from '../../Components/mutuelle-entreprises/Footer';
 import InsuranceBrands from '../../Components/dentaire/InsuranceBrands'
-import Guides from '../../Components/optique/Guide/Guides';
+import Guides from '../../Components/dentaire/Guide/Guides';
 import QuestionsChoixMutuelle from '../../Components/dentaire/QuestionsChoixMutuelle'
 import BanniereDevis from '../../Components/dentaire/BanniereDevis';
 import FaqDentaires from '../../Components/dentaire/FaqDentaires';

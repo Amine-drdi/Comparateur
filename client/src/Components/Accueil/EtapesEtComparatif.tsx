@@ -73,6 +73,85 @@ export default function EtapesEtComparatif() {
           Nos résultats ne sont influencés par aucun assureur. Nous vous garantissons une comparaison impartiale.
         </p>
       </div>
+      <div className="max-w-5xl mx-auto p-6 text-gray-800">
+      <h2 className="text-xl font-bold mb-4">
+        Préparez votre comparaison d’assurance santé
+      </h2>
+
+      <p className="mb-4">
+        Avant de <span className="font-semibold">lancer une simulation</span>, il est important d’évaluer{" "}
+        <span className="font-semibold">vos critères essentiels</span> :
+      </p>
+
+      <ul className="list-disc list-inside mb-4">
+        <li><span className="font-semibold">Vos dépenses de santé :</span> consultations, soins dentaires, optique, hospitalisation…</li>
+        <li><span className="font-semibold">Vos attentes en matière de prise en charge :</span> niveau de remboursement souhaité, garanties spécifiques.</li>
+        <li><span className="font-semibold">Votre budget :</span> montant que vous êtes prêt à investir dans votre mutuelle.</li>
+      </ul>
+
+      <p className="mb-4">
+        Une fois ces critères définis, <span className="font-semibold">comparez les devis mutuelle en ligne</span> selon votre âge, votre situation familiale, votre département et le niveau de garanties souhaité.
+      </p>
+      <p className="mb-6 italic text-sm">
+        Vous ne trouvez pas le bon contrat de complémentaire santé ? Nous sélectionnons des courtiers qui prendront contact avec vous par téléphone afin d’affiner vos attentes et vous aider à choisir le meilleur contrat.
+      </p>
+
+      <h3 className="text-lg font-semibold mb-2">
+        Quelles garanties privilégier pour sa mutuelle santé ?
+      </h3>
+
+      <p className="mb-4">
+        Le choix des niveaux garanties d’une <span className="font-semibold">complémentaire santé</span> dépend de votre <span className="font-semibold">profil</span> et de vos <span className="font-semibold">besoins médicaux</span>. Voici les principales couvertures à considérer :
+      </p>
+
+      <div className="space-y-4 text-sm md:text-base">
+        <div>
+          <h4 className="font-semibold">1. Les soins courants</h4>
+          <ul className="list-disc list-inside">
+            <li>Consultations chez le <span className="font-semibold">médecin généraliste</span> et les spécialistes</li>
+            <li>Analyses médicales, prises de sang, radiographies</li>
+            <li>Actes paramédicaux (kinésithérapie, infirmiers, etc.)</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-semibold">2. L’hospitalisation</h4>
+          <ul className="list-disc list-inside">
+            <li>Frais de séjour en clinique ou à l’hôpital</li>
+            <li><span className="font-semibold">Dépassements d’honoraires</span> des chirurgiens et anesthésistes</li>
+            <li>Chambre particulière et services d’assistance</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-semibold">3. Les soins dentaires</h4>
+          <ul className="list-disc list-inside">
+            <li>Soins courants (détartrage, traitement des caries)</li>
+            <li><span className="font-semibold">Prothèses dentaires et implants</span> (enfants et adultes), souvent mal remboursés par la Sécurité Sociale</li>
+            <li>Orthodontie pour les enfants et adultes</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-semibold">4. Les soins optiques</h4>
+          <ul className="list-disc list-inside">
+            <li>Remboursement des <span className="font-semibold">lunettes et lentilles de contact</span> (enfants et adultes)</li>
+            <li>Chirurgie réfractive pour corriger la vue</li>
+            <li>Examens de la vision</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-semibold">5. Les garanties supplémentaires</h4>
+          <ul className="list-disc list-inside">
+            <li>Vaccins non pris en charge par la Sécurité Sociale</li>
+            <li>Cures thermales</li>
+            <li><span className="font-semibold">Médecines douces</span> (ostéopathie, acupuncture, homéopathie…)</li>
+            <li>Assistance à domicile en cas d’hospitalisation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
     </section>
   );
 }

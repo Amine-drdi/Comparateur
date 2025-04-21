@@ -3,13 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfileFromToken, setUser } from '../../redux/authSlice';
 import { getUserProfileToken } from '../../api/authApi';
+import type { RootState, AppDispatch } from '../../redux/store';
 
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -17,10 +18,11 @@ export default function Dashboard() {
 
     if (token) {
       localStorage.setItem('token', token);
-      dispatch(fetchUserProfileFromToken());
+
+      dispatch(fetchUserProfileFromToken()); // ✅ thunk bien typé
 
       getUserProfileToken(token)
-        .then(user => dispatch(setUser(user))) 
+        .then(user => dispatch(setUser(user)))
         .catch(err => console.error("Erreur auth persistante :", err));
 
       navigate('/dashboard', { replace: true });
@@ -43,5 +45,5 @@ export default function Dashboard() {
     );
   }
 
-  return <div className="pt-20" />;
+ /* return <div className="pt-20">Bienvenue, {user.name} !</div>;*/
 }

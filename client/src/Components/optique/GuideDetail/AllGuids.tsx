@@ -157,7 +157,7 @@ export default function AllGuides() {
                     <div className="p-6">
                       <h3
                         className="text-xl font-semibold text-gray-900 mb-3 cursor-pointer hover:text-blue-600"
-                        onClick={() => navigate(`/guide/${guide.id}`)}
+                        onClick={() => navigate(`/guideOptique/${guide.id}`)}
                       >
                         {guide.title}
                       </h3>
@@ -165,7 +165,7 @@ export default function AllGuides() {
                         {guide.description}
                       </p>
                       <button
-                        onClick={() => navigate(`/guide/${guide.id}`)}
+                        onClick={() => navigate(`/guideOptique/${guide.id}`)}
                         className="text-blue-600 font-medium hover:text-blue-800 flex items-center"
                       >
                         Lire la suite

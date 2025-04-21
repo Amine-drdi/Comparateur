@@ -1,17 +1,26 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.js'
-import { AuthProvider } from './context/AuthContext.js'; // Tu peux le garder si tu l'utilises encore
-import { Provider } from 'react-redux'; // <-- Ajoute ceci
-import store from './redux/store.js'; // <-- Ton store Redux
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
 
-createRoot(document.getElementById('root')).render(
+import App from './App'; // ne pas mettre .js en TypeScript
+import { AuthProvider } from './context/AuthContext';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
+// Récupérer l'élément racine
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error("L'élément avec l'ID 'root' est introuvable.");
+}
+
+// Créer la racine React et démarrer le rendu
+createRoot(rootElement).render(
   <StrictMode>
-  <Provider store={store}> {/* <-- Le bon Provider pour Redux */}
-    <AuthProvider> {/* <-- Facultatif si tu gardes AuthContext */}
-      <App />
-    </AuthProvider>
-  </Provider>
-</StrictMode>
-)
+    <Provider store={store}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </Provider>
+  </StrictMode>
+);

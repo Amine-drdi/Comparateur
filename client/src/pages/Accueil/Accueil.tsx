@@ -8,6 +8,11 @@ import woman from "../../assets/Accueil/images/woman.png"
 import InsuranceBrands from "../../Components/Accueil/InsuranceBrands";
 import ComparateurMutuelle from "../../Components/Accueil/ComparateurMutuelle";
 import EtapesEtComparatif from "../../Components/Accueil/EtapesEtComparatif"
+import ComprendreMonDevis from "../../Components/Accueil/ComprendreMonDevis"
+import FacteursPrixMutuelle from "../../Components/Accueil/FacteursPrixMutuelle"
+import AvisEtDevis from "../../Components/Accueil/AvisEtDevis"
+import MutuelleFAQSection from "../../Components/Accueil/MutuelleFAQSection";
+import HealthInsuranceMenuWithNavbar from "../../Components/Accueil/InsuranceAndMutualHealth";
 export default function Accueil() {
   return (
     <div>
@@ -61,8 +66,13 @@ export default function Accueil() {
       </div>
     </section>
     <InsuranceBrands/>
+    <HealthInsuranceMenuWithNavbar/>
     <ComparateurMutuelle/>
     <EtapesEtComparatif/>
+    <ComprendreMonDevis/>
+    <FacteursPrixMutuelle/>
+    <AvisEtDevis/>
+    <MutuelleFAQSection/>
     </div>
   );
 }

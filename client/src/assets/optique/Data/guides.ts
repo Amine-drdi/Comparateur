@@ -49,6 +49,6 @@ export const guides = [
     { id: 22 , title: "Ordonnance de lunettes et de lentilles : ophtalmologue, opticien ou orthoptiste ?", image: ordonnanceDeLunettesEtDeLentilles , link: "#" },
     { id: 23 , title: "Quelle mutuelle choisir ? Voici la liste des critères à prendre en compte", image: quelleMutuelleChoisir , link: "#" },
     { id: 24 , title: "Quelle est la prise en charge de la sécurité sociale pour une opération du strabisme ?", image:  strabismeQuelsRemboursements, link: "#" },
-    { id: 24 , title: "Opération de la myopie, de la presbytie, de l’hypermétropie… la chirurgie réfractive", image:  chirurgieRefractive, link: "#" },
+    { id: 25 , title: "Opération de la myopie, de la presbytie, de l’hypermétropie… la chirurgie réfractive", image:  chirurgieRefractive, link: "#" },
 
   ];

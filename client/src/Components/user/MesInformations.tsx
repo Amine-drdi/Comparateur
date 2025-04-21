@@ -1,13 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserProfile, updateUserProfile, deleteUserProfile } from '../../api/authApi';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../store';
+
+interface UserInfo {
+  prenom: string;
+  nom: string;
+  email: string;
+  codePostal?: string;
+  address?: string;
+  telephone?: string;
+  [key: string]: string | undefined;
+}
 
 export default function MesInformations() {
-  const [userInfo, setUserInfo] = useState(null);
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  const user = useSelector((state) => state.auth.user);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,30 +38,32 @@ export default function MesInformations() {
     }
   }, [user]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserInfo((prev) => ({ ...prev, [name]: value }));
+    setUserInfo((prev) => prev ? { ...prev, [name]: value } : prev);
   };
 
   const handleUpdate = async () => {
+    if (!userInfo) return;
+
     try {
       await updateUserProfile(user._id, userInfo);
       setSuccessMessage("Informations mises à jour avec succès.");
+      setError(null);
     } catch (err) {
       console.error(err);
       setError("Une erreur est survenue lors de la mise à jour.");
+      setSuccessMessage(null);
     }
   };
 
   const handleDeleteAccount = async () => {
-    const confirmDelete = window.confirm("Es-tu sûre de vouloir supprimer ton compte ? Cette action est irréversible.");
-
+    const confirmDelete = window.confirm("Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible.");
     if (!confirmDelete) return;
 
     try {
       await deleteUserProfile(user._id);
-
-      dispatch({ type: "LOGOUT" }); // adapte à ton reducer
+      dispatch({ type: "LOGOUT" });
       navigate('/');
     } catch (error) {
       console.error('Erreur suppression :', error);
@@ -76,7 +89,7 @@ export default function MesInformations() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         <div className="flex justify-center">
-          <img src="./images/Profil_info.svg" alt="Illustration" className="h-auto max-h-[400px]" />
+          <img src="./images/about.jpg" alt="Illustration" className="h-auto max-h-[400px]" />
         </div>
 
         <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
@@ -95,7 +108,7 @@ export default function MesInformations() {
                 name={name}
                 value={userInfo[name] || ''}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           ))}
@@ -104,14 +117,14 @@ export default function MesInformations() {
             <button
               type="button"
               onClick={handleUpdate}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow transition"
             >
               Modifier
             </button>
             <button
               type="button"
               onClick={handleDeleteAccount}
-              className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl shadow"
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl shadow transition"
             >
               Supprimer mon compte
             </button>

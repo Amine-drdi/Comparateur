@@ -1,22 +1,49 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
-// Créer le contexte
-const CartContext = createContext();
+// 🛍️ Typage d’un article du panier
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  total: number; // généralement = price * quantity
+}
 
-// Créer un hook personnalisé pour utiliser le contexte
-export const useCart = () => {
-  return useContext(CartContext);
+// 🔧 Typage du contexte
+interface CartContextType {
+  cart: CartItem[];
+  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (index: number) => void;
+  calculateTotal: () => number;
+  clearCart: () => void;
+}
+
+// ✅ Contexte typé
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+// ✅ Hook personnalisé avec sécurité
+export const useCart = (): CartContextType => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
 };
 
-// Créer le fournisseur de contexte
-export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+// ✅ Typage des props pour le provider
+interface CartProviderProps {
+  children: ReactNode;
+}
 
-  const addToCart = (item) => {
+export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  const addToCart = (item: CartItem) => {
     setCart((prevCart) => [...prevCart, item]);
   };
 
-  const removeFromCart = (index) => {
+  const removeFromCart = (index: number) => {
     setCart((prevCart) => {
       const updatedCart = [...prevCart];
       updatedCart.splice(index, 1);
@@ -24,7 +51,7 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const calculateTotal = () => {
+  const calculateTotal = (): number => {
     return cart.reduce((sum, item) => sum + item.total, 0);
   };
 
@@ -34,7 +61,14 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, setCart, addToCart, removeFromCart, calculateTotal, clearCart }}
+      value={{
+        cart,
+        setCart,
+        addToCart,
+        removeFromCart,
+        calculateTotal,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>
