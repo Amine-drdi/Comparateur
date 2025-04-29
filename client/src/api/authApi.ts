@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-interface User {
-  _id: string;
-  nom: string;
+interface UserInfo {
   prenom: string;
+  nom: string;
   email: string;
-  telephone: string;
-  isVerified: boolean;
-  createdAt: string;
+  codePostal?: string;
+  address?: string;
+  telephone?: string;
+  [key: string]: string | undefined;
 }
 // Envoi du code à l'e-mail
 export async function sendCode(email: any) {
@@ -27,34 +27,9 @@ export async function sendCode(email: any) {
 }
 
 
-/*export async function verifyCode(email: any, code: any) {
-  const response = await fetch(`${API_BASE_URL}/auth/verify-code`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, code }),
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Code incorrect");
-  }
-
-  return response.json(); // peut contenir un token ou user info
-}
-*/
-/*export const verifyCode = async (
-  email: string,
-  code: string
-): Promise<{ token: string; user: User }> => {
-  const response = await axios.post(`${API_BASE_URL}/auth/verify-code`, { email, code });
-  return response.data; // ✅ on retourne uniquement les données utiles
-};*/
-
 export const verifyCode = async (email: string, code: string) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/auth/verify-code`, { email, code });
-    // Make sure the response includes the token and user data
-    // Expected response format: { token: "your-jwt-token", user: {...} }
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -82,8 +57,7 @@ export const getUserProfileToken = async (token: any) => {
   }
 };
 
-
-export const updateUserProfile = async (id: any, userData: null) => {
+export const updateUserProfile = async (id: string, userData: UserInfo): Promise<UserInfo> => {
   const response = await fetch(`${API_BASE_URL}/auth/profile/${id}`, {
     method: 'PUT',
     headers: {

@@ -1,24 +1,24 @@
 
 import React  from 'react';
-import MutuelleOptiqueBanner from '../../Components/optique/MutuelleOptiqueBanner';
-import QuestionsSection  from '../../Components/optique/QuestionsSection'
-import AssuranceBanner from '../../Components/optique/AssuranceBanner';
+import MutuelleSeniorBanner from '../../Components/TNS/MutuelleSeniorBanner';
+import QuestionsSection  from '../../Components/TNS/QuestionsSection'
+import AssuranceBanner from '../../Components/TNS/AssuranceBanner';
 //import  Footer from '../../Components/mutuelle-entreprises/Footer';
-import InsuranceBrands from '../../Components/optique/InsuranceBrands'
-import Guides from '../../Components/optique/Guide/Guides';
-export default function Orthodontie() {
+import InsuranceBrands from '../../Components/TNS/InsuranceBrands'
+import Guides from '../../Components/TNS/Guide/Guides';
+export default function Optique() {
   return (
     <div className="min-h-screen bg-gray-100">
    {/* Main content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Notre bannière de mutuelle entreprise */}
-        <MutuelleOptiqueBanner/>
+        <MutuelleSeniorBanner/>
         <InsuranceBrands/>
         <QuestionsSection/>
         <Guides/>
         {/* Section supplémentaire */}
         <section className="mt-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Trouvez les meilleurs remboursements pour l'orthodontie adulte</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Pourquoi choisir notre mutuelle d'entreprise ?</h2>
           
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-lg shadow-md">

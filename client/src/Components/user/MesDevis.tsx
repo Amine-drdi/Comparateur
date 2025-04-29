@@ -3,7 +3,7 @@ import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getDevisByCategory, deleteDevisById } from '../../api/devisApi';
-import { RootState } from '../../store';
+import { RootState } from '../../redux/store';
 
 interface DevisItem {
   id: string;
@@ -37,13 +37,14 @@ export default function MesDevis() {
 
   useEffect(() => {
     const fetchDevis = async () => {
+      if (!user) return; // 🛑 user est null, on arrête
+  
       try {
         const data = await getDevisByCategory(tab, user.email);
-
         const mapped: DevisItem[] = data.map((d: any) => {
           const adultes = d.members.filter((m: any) => m.type === 'adulte').length;
           const enfants = d.members.filter((m: any) => m.type === 'enfant').length;
-
+  
           return {
             id: d._id,
             date: new Date(d.dateSearch).toLocaleDateString(),
@@ -56,18 +57,18 @@ export default function MesDevis() {
             debut: new Date(d.dateDebutAssurance).toLocaleDateString(),
           };
         });
-
+  
         setDevisData((prev) => ({ ...prev, [tab]: mapped }));
       } catch (err) {
         console.error('Erreur fetch devis:', err);
       }
     };
-
+  
     fetchDevis();
-  }, [tab, user.email]);
+  }, [tab, user]);
 
   const handleUpdate = (id: string) => {
-    navigate(`/compare/${id}`);
+    navigate(`/modification/${id}`);
   };
 
   const handleDelete = async (id: string) => {

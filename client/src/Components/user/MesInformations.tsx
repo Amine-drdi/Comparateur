@@ -2,7 +2,7 @@ import { useEffect, useState, ChangeEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserProfile, updateUserProfile, deleteUserProfile } from '../../api/authApi';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../../store';
+import { RootState } from '../../redux/store';
 
 interface UserInfo {
   prenom: string;
@@ -24,6 +24,8 @@ export default function MesInformations() {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
+      if (!user) return; // 🛑 user est null, on arrête
+
       try {
         const data = await getUserProfile(user._id);
         setUserInfo(data);
@@ -44,8 +46,8 @@ export default function MesInformations() {
   };
 
   const handleUpdate = async () => {
-    if (!userInfo) return;
-
+    if (!user || !userInfo) return; // ✅ sécurise les deux
+  
     try {
       await updateUserProfile(user._id, userInfo);
       setSuccessMessage("Informations mises à jour avec succès.");
@@ -59,8 +61,8 @@ export default function MesInformations() {
 
   const handleDeleteAccount = async () => {
     const confirmDelete = window.confirm("Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible.");
-    if (!confirmDelete) return;
-
+    if (!confirmDelete || !user) return; // ✅ sécurise user
+  
     try {
       await deleteUserProfile(user._id);
       dispatch({ type: "LOGOUT" });
@@ -89,7 +91,7 @@ export default function MesInformations() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         <div className="flex justify-center">
-          <img src="./images/about.jpg" alt="Illustration" className="h-auto max-h-[400px]" />
+          <img src="./images/about.jpg" alt="" className="h-auto max-h-[400px]" />
         </div>
 
         <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>

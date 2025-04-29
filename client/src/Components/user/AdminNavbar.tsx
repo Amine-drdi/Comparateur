@@ -1,6 +1,6 @@
 import { logout as reduxLogout } from '../../redux/authSlice';
 import { FiLogOut } from 'react-icons/fi';
-import { SetStateAction, useState, useEffect } from 'react';
+import { SetStateAction, useState, useEffect, JSX } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import MesDevis from './MesDevis';
 import MesInformations from './MesInformations';
@@ -8,14 +8,15 @@ import MesPreferences from './MesPreferences';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import logo from '../../assets/Accueil/images/mutuelle2.png';
 import { Link } from 'react-router-dom';
+type TabKey = 'devis' | 'informations' | 'preferences';
 
 export default function AdminNavbar() {
   const user = useSelector((state: any) => state.auth.user);
   const dispatch = useDispatch();
 
-  const [activeTab, setActiveTab] = useState(() => {
-    return localStorage.getItem('adminActiveTab') || 'devis';
-  });
+  const [activeTab, setActiveTab] = useState<TabKey>(
+    (localStorage.getItem('adminActiveTab') as TabKey) || 'devis'
+  );
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -24,23 +25,22 @@ export default function AdminNavbar() {
     window.location.href = '/';
   };
 
-  const handleTabChange = (tab: SetStateAction<string>) => {
+  const handleTabChange = (tab: TabKey) => {
     setActiveTab(tab);
     localStorage.setItem('adminActiveTab', tab);
     setIsMobileMenuOpen(false);
   };
-
+ 
   // Bloquer scroll quand menu mobile est ouvert
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'auto';
   }, [isMobileMenuOpen]);
 
-  const components = {
+  const components: Record<TabKey, JSX.Element> = {
     devis: <MesDevis />,
     informations: <MesInformations />,
     preferences: <MesPreferences />,
   };
-
   return (
     <>
       {/* TOP NAVBAR */}

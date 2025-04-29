@@ -1,40 +1,22 @@
-import React, { useState } from "react";
+import React from 'react';
 
-interface Question {
-  question: string;
-  answer: React.ReactNode;
-}
-
-const faqData: Question[] = [
-  {
-    question: "Quelles mutuelles offrent les meilleurs remboursements ?",
-    answer: (
-      <>
-        Certaines mutuelles comme Aésio, MGC ou CNP proposent des niveaux de remboursement élevés. Toutefois, chaque situation est unique.
-        Une simulation personnalisée est le meilleur moyen d’identifier la couverture la plus adaptée à vos besoins.
-      </>
-    ),
-  },
-  {
-    question: "Quel est le tarif moyen d’une mutuelle par mois ?",
-    answer: (
-      <>
-        Le prix dépend de votre âge, lieu de résidence, et niveau de couverture. 
-        Un jeune actif peut payer entre 30 € et 50 €, tandis qu’un senior peut atteindre 150 €/mois. 
-        Un devis personnalisé permet d'obtenir un tarif précis.
-      </>
-    ),
-  },
-  {
-    question: "Quelle est la mutuelle la moins chère ?",
-    answer: (
-      <>
-        Les mutuelles comme Identités Mutuelle ou Direct Assurance sont souvent compétitives. 
-        Selon vos revenus, vous pouvez aussi bénéficier de la Complémentaire Santé Solidaire.
-      </>
-    ),
-  },
-  {
+const MutuelleFAQSection = () => {
+  const faqs = [
+    {
+      question: 'Quelles mutuelles offrent les meilleurs remboursements?',
+      answer: 'Certaines mutuelles comme Aésio, MGC ou CNP proposent des niveaux de remboursement élevés. Toutefois, chaque situation est unique.Une simulation personnalisée est le meilleur moyen d’identifier la couverture la plus adaptée à vos besoins.',
+    },
+    {
+      question: "Quel est le tarif moyen d’une mutuelle par mois ?",
+      answer: (
+        <>
+          Le prix dépend de votre âge, lieu de résidence, et niveau de couverture. 
+          Un jeune actif peut payer entre 30 € et 50 €, tandis qu’un senior peut atteindre 150 €/mois. 
+          Un devis personnalisé permet d'obtenir un tarif précis.
+        </>
+      ),
+    },
+    {
     question: "Comment obtenir un devis mutuelle santé gratuit ?",
     answer: (
       <>
@@ -72,137 +54,55 @@ const faqData: Question[] = [
         <strong>Indépendants, étudiants, retraités :</strong> ce n’est pas obligatoire, mais fortement recommandé.
       </>
     ),
-  },
-  {
-    question: "Existe-t-il un délai de carence ?",
-    answer: (
-      <>
-        Certaines mutuelles appliquent un délai avant le remboursement de certains soins.
-        Vérifiez bien ce point avant de souscrire.
-      </>
-    ),
-  },
-  {
-    question: "Quels sont les différents types de mutuelles ?",
-    answer: (
-      <ul className="list-disc list-inside ml-4 space-y-1">
-        <li><strong>Individuelle :</strong> pour les indépendants ou étudiants</li>
-        <li><strong>Familiale :</strong> pour couvrir conjoint et enfants</li>
-        <li><strong>Collective :</strong> proposée par l’entreprise</li>
-        <li><strong>Sénior :</strong> renforce les postes dentaires, optiques, hospitaliers</li>
-      </ul>
-    ),
-  },
-  {
-    question: "Qu’est-ce qu’une mutuelle santé ?",
-    answer: (
-      <>
-        Une mutuelle est un organisme à but non lucratif qui rembourse les frais de santé non pris en charge par la Sécurité Sociale. 
-        Elle propose des contrats adaptés selon votre profil et vos besoins.
-      </>
-    ),
-  },
-  {
-    question: "Comment fonctionne une mutuelle ?",
-    answer: (
-      <>
-        Elle intervient en complément de la Sécurité Sociale pour vous rembourser :
-        <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
-          <li>Consultations médicales</li>
-          <li>Soins dentaires</li>
-          <li>Optique</li>
-          <li>Hospitalisation</li>
-          <li>Appareillage auditif</li>
-        </ul>
-      </>
-    ),
-  },
-  {
-    question: "Pourquoi souscrire une complémentaire santé ?",
-    answer: (
-      <>
-        Elle vous protège contre les frais non remboursés par la Sécurité Sociale, comme les dépassements d’honoraires ou certains soins dentaires/optique.
-        Elle peut prendre en charge jusqu’à 100 % des dépenses selon le contrat choisi.
-      </>
-    ),
-  },
-  {
-    question: "Le tiers payant, qu’est-ce que c’est ?",
-    answer: (
-      <>
-        Le tiers payant vous permet de ne pas avancer les frais médicaux. La mutuelle règle directement le professionnel de santé.
-      </>
-    ),
-  },
-  {
-    question: "Comment bien choisir ses garanties ?",
-    answer: (
-      <ul className="list-disc list-inside ml-4 space-y-1">
-        <li>Si vous portez des lunettes, privilégiez une mutuelle avec bonne couverture optique</li>
-        <li>Problèmes dentaires ? Choisissez un contrat avec un bon remboursement en dentaire</li>
-        <li>Pour les familles : assurez-vous de la prise en charge des enfants</li>
-        <li>Comparez les offres selon vos priorités pour équilibrer prix et garanties</li>
-      </ul>
-    ),
-  },
-  {
-    question: "Comment fonctionne le remboursement ?",
-    answer: (
-      <>
-        Le remboursement se fait en deux étapes :
-        <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
-          <li><strong>Sécurité Sociale :</strong> prend en charge selon un tarif de base</li>
-          <li><strong>Mutuelle :</strong> complète ou couvre le reste (ticket modérateur, dépassements d’honoraires…)</li>
-        </ul>
-      </>
-    ),
-  },
-  {
-    question: "Comment obtenir un devis mutuelle ?",
-    answer: (
-      <>
-        Avec notre simulateur, plus besoin de vous déplacer. En un clic, comparez plusieurs offres adaptées à vos besoins.
-        <br />
-        <span className="text-blue-600 font-medium">Économisez en moyenne 36 % sur votre contrat avec notre outil gratuit !</span>
-      </>
-    ),
-  },
-];
-
-export default function MutuelleFAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  }
+  ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold text-orange-600 mb-8 text-center">
-        Vos questions sur la mutuelle santé
-      </h2>
+    <section className="py-2 bg-[#f5f6ff] sm:py-8 lg:py-12">
+      <div className="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto text-center">
+        <span className="bg-yellow-300 text-gray-800 px-3 py-1 rounded-md text-sm font-medium">
+        Questions fréquemment posées
+            </span>
+        <h2 className="text-3xl font-bold text-gray-900 mt-4">
+              Questions & Réponses
+            </h2>
+          <p className="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600">
+          Explorez les questions et réponses courantes sur notre comparateur 
+          </p>
+        </div>
 
-      <div className="space-y-4">
-        {faqData.map((item, index) => (
-          <div
-            key={index}
-            className="border rounded-md shadow-sm"
-          >
-            <button
-              onClick={() => toggle(index)}
-              className="w-full flex justify-between items-center p-4 text-left text-gray-800 font-semibold hover:bg-gray-50"
-            >
-              {item.question}
-              <span className="text-orange-500">
-                {openIndex === index ? "−" : "+"}
-              </span>
-            </button>
-            {openIndex === index && (
-              <div className="px-4 pb-4 text-sm text-gray-700">{item.answer}</div>
-            )}
+        <div className="grid grid-cols-1 mt-12 md:mt-20 md:grid-cols-2 gap-y-16 gap-x-20">
+          {faqs.map((faq, index) => (
+            <div key={index} className="flex items-start">
+              <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 bg-gray-700 rounded-full">
+                <span className="text-lg font-semibold text-white">?</span>
+              </div>
+              <div className="ml-4">
+                <p className="text-xl font-semibold text-gray-700">{faq.question}</p>
+                <p className="mt-4 text-base text-gray-500">{faq.answer}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-center mt-12 md:mt-20">
+          <div className="px-8 py-4 text-center bg-gray-800 rounded-full">
+            <p className="text-gray-50">
+            Vous n’avez pas trouvé la réponse que vous cherchez ?{' '}
+              <a
+                href="#"
+                title="Contact support"
+                className="text-yellow-300 transition-all duration-200 hover:text-yellow-400 focus:text-yellow-400 hover:underline"
+              >
+                Contactez notre support
+              </a>
+            </p>
           </div>
-        ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+export default MutuelleFAQSection;

@@ -41,15 +41,25 @@ module.exports = (passport: { use: (arg0: any) => void; serializeUser: (arg0: (u
     console.warn("⚠️ GOOGLE_CLIENT_ID ou GOOGLE_CLIENT_SECRET est manquant. Auth Google désactivée.");
     return;
   }
-
   passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
   },
-  (accessToken: any, refreshToken: any, profile: any, done: (arg0: null, arg1: any) => any) => {
-    // Ici tu peux gérer la logique utilisateur
-    return done(null, profile);
+  async (_accessToken: string, _refreshToken: string, profile: Profile, done: (err: any, user?: any) => void) => {
+    try {
+      const email = profile.emails?.[0].value;
+      const User = require('../models/User');
+      const existingUser = await User.findOne({ email });
+  
+      if (existingUser) {
+        return done(null, { ...existingUser.toObject(), exists: true });
+      } else {
+        return done(null, { email, exists: false });
+      }
+    } catch (err) {
+      return done(err, null);
+    }
   }));
   
   passport.serializeUser((user, done) => {

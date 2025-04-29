@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {guides} from "../../../assets/optique/data/guides"
+import {guides} from "../../../assets/optique/Data/guides"
 import { useNavigate } from "react-router-dom";
 
 const itemsPerPage = 6;

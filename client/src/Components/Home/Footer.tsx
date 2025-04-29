@@ -21,12 +21,10 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <a href="#" className="flex items-center text-2xl font-black text-white mb-4">
-              <span className="text-3xl text-blue-500 mr-2">
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 24 24">
-                  <path fill="currentColor" d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91c4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5z" />
-                </svg>
-              </span>
-              MonCompare 
+            <img src="src/assets/Accueil/images/mutuelle2.png" alt="logo" className="w-10 h-10" />
+          <span className="text-sm md:text-lg font-bold text-orange-600">
+            Devis <span className="text-blue-600">mutuelle</span>
+          </span>
             </a>
             <p className="text-sm leading-relaxed"> 
             
@@ -64,7 +62,7 @@ const Footer = () => {
 
         {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center text-sm">
-          <p className="flex-1">© 2025 LNR Finance. Tous droits réservés.</p>
+          <p className="flex-1">© 2025 Devis mutuelle  Tous droits réservés.</p>
           <div className="flex gap-4 justify-center">
             <a href="/" className="hover:text-blue-300">
               <FaInstagram className="text-xl" />

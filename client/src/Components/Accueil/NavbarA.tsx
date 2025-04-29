@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle , FaSignInAlt } from "react-icons/fa";
 import logo from "../../assets/Accueil/images/mutuelle2.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../context/AuthContext";
 import { AnimatePresence, motion } from "framer-motion";
+import { MdCompare } from "react-icons/md";
 
 const NavbarA: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,10 +27,18 @@ const NavbarA: React.FC = () => {
     <header className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between p-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="logo" className="w-10 h-10" />
-          <span className="text-sm md:text-lg font-bold text-orange-600">
-            Devis <span className="text-blue-600">mutuelle</span>
+        <Link 
+          to="/" 
+          className="flex items-center gap-2 hover:scale-105 transition-transform duration-200"
+        >
+          <motion.img 
+            src={logo} 
+            alt="logo" 
+            className="w-12 h-12"
+            whileHover={{ rotate: 5 }}
+          />
+          <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-orange-600 to-blue-600 bg-clip-text text-transparent">
+            Devis <span className="font-extrabold">Mutuelle</span>
           </span>
         </Link>
 
@@ -37,11 +46,19 @@ const NavbarA: React.FC = () => {
         <div className="flex items-center gap-2">
           {/* DEVIS GRATUIT - visible on both mobile and desktop now */}
           <Link
-            to="/compare"
-            className="border border-blue-600 text-blue-600 px-4 py-1 rounded hover:bg-blue-600 hover:text-white transition text-sm"
-          >
-            DEVIS GRATUIT
-          </Link>
+  to="/compare"
+  className="hidden md:flex items-center gap-1 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md hover:shadow-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300"
+>
+ <MdCompare /> DEVIS GRATUIT
+</Link>
+
+<Link
+  to="/compare"
+  className="md:hidden px-3 py-1 text-sm rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
+>
+  Devis
+</Link>
+
 
           {/* Menu utilisateur (desktop) */}
           <div className="hidden md:block">
@@ -78,21 +95,22 @@ const NavbarA: React.FC = () => {
             ) : (
               <Link
                 to="/login"
-                className="px-4 py-2 text-sm font-medium rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
+                className="flex items-center gap-1 px-4 py-2 rounded-full border border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors"
               >
-                Connexion
+               <FaSignInAlt /> Connexion
               </Link>
             )}
           </div>
 
           {/* Connexion button for mobile */}
           {!isAuthenticated && (
-            <Link
-              to="/login"
-              className="md:hidden px-4 py-1 text-sm font-medium rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
-            >
-              Connexion
-            </Link>
+           <Link
+           to="/login"
+           className="md:hidden px-3 py-1 text-sm rounded-full border border-blue-600 text-blue-600 bg-white hover:bg-blue-50 transition"
+         >
+           Connexion
+         </Link>
+         
           )}
 
           {/* Burger menu (mobile) */}
