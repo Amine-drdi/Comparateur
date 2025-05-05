@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import myImage from '../../assets/optique/images/Nurse-Transparent-PNG.png';
 
-export default function MutuelleSeniorBanner() {
+export default function MutuelleTNSBanner() {
 
   const [selectedOption, setSelectedOption] = useState("");
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

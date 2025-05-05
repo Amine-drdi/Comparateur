@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes,Navigate } from "react-router-dom";
 import LoadingSpinner from "./Components/mutuelle-sante/health insurance/LoadingSpinner";
+import Official from "./pages/official/Official";
 
 
 
@@ -40,6 +41,8 @@ const Expatries = React.lazy(()  => import("./pages/expatries/Expatries"));
 const GuideDetailExpatries = React.lazy(()  => import("./Components/expatries/GuideDetail/GuideDetail"));
 const Senior = React.lazy(()=> import("./pages/senior/Senior"))
 const TNS = React.lazy(()=> import("./pages/TNS/TNS"))
+const Unemployed = React.lazy(()=> import("./pages/unemployed/Unemployed"))
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -258,6 +261,18 @@ const AppRoutes = () => {
                   element={
                   <React.Suspense fallback={<LoadingSpinner/>}>
                   <MesInformations/>
+                  </React.Suspense>}
+                 />
+                 <Route path="/profil/sans-emploi"
+                  element={
+                  <React.Suspense fallback={<LoadingSpinner/>}>
+                  <Unemployed/>
+                  </React.Suspense>}
+                 />
+                 <Route path="/profil/fonctionnaire"
+                  element={
+                  <React.Suspense fallback={<LoadingSpinner/>}>
+                  <Official/>
                   </React.Suspense>}
                  />
       </Routes>
