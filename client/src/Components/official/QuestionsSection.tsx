@@ -1,25 +1,18 @@
 import { ChevronDown } from 'lucide-react';
 import { SetStateAction, useState } from 'react';
 import mutuelleImage from "../../assets/optique/images/mutuelle-optique.png"
-import TNS from "../../assets/TNS/images/TNS.png"
-import ClassementMutuelleSenior from './ClassementMutuelleSenior';
+import official from "../../assets/official/images/official.png"
 import { Info } from "lucide-react"; // Icône informative, facultative
 import mutuelleIcon from "../../assets/optique/images/download.jpg"; // Remplace par le bon chemin vers ton icône
-import CompareBanner from "../../Components/TNS/CompareBanner"
-import TNS2 from "../../assets/TNS/images/TNS2.png"
-import GarantiesMutuelleSenior from "./GarantiesMutuelleSenior"
-import MutuelleSeniorInfos from './MutuelleSeniorInfos';
-import ComparatifMutuelleSenior from './ComparatifMutuelleSenior';
-import TableauPrixMutuelleSenior from './TableauPrixMutuelleSenior';
-import FaqMutuelleSenior from './FaqSection';
-import MutuelleTNS from './MutuelleTNS';
-import MeilleureMutuelleTNS from './MeilleureMutuelleTNS';
-import PrixMutuelleIndependant from './PrixMutuelleIndependant';
-import CompareMutuellesTNS from './CompareMutuellesTNS';
-import ContratMadelinTNS from './ContratMadelinTNS';
-import GarantiesTravailleurNonSalarie from './GarantiesTravailleurNonSalarie';
-import CompareMutuelleTNS2 from './CompareMutuelleTNS2';
-import FaqSection from './FaqSection';
+import CompareBanner from "../../Components/official/CompareBanner"
+import fonctionnaire from "../../assets/official/images/fonctionnaire.png"
+import MutuelleFonctionnaire from "./MutuelleFonctionnaire"
+import ComparatifMutuelleFonctionnaire from './ComparatifMutuelleFonctionnaire';
+import CompareGarantiesFonctionnaires from './CompareGarantiesFonctionnaires';
+import CriteresComparaison from './CriteresComparaison';
+import TableauMutuellePrix from './TableauMutuellePrix';
+import AvantagesComparateur from './AvantagesComparateur';
+
 const faqData = [
   {
     question: "Qu’est-ce que le 100% santé en optique ?",
@@ -89,24 +82,26 @@ export default function QuestionsSection() {
         <span className="mx-2">›</span>
         <a href="#" className="hover:text-blue-600">Mutuelle sante</a>
         <span className="mx-2">›</span>
-        <span className="text-gray-500">Profil - Mutuelle TNS : comparez les mutuelles pour travailleur non salarié en 2025</span>
+        <span className="text-gray-500">Profil - Mutuelle fonctionnaire : comparez les offres de mutuelles pour fonctionnaires</span>
       </div>
 
       <h1 className="text-3xl font-bold text-teal-800 mb-6">
-      Mutuelle TNS : comparez les mutuelles pour travailleur non salarié en 2025
+      Mutuelle fonctionnaire : comparez les offres de mutuelles pour fonctionnaires
       </h1>
 
       <section className="mt-10 max-w-4xl mx-auto px-4">
       <p className="text-gray-700 mb-6 leading-relaxed">
-      En tant que travailleur non salarié (TNS) c'est à vous de faire les démarches pour souscrire
-       une mutuelle santé adaptée à vos besoins de santé. les Devis mutuelle  vous donne tous les conseils
-        pour trouver la mutuelle TNS 
-      avec des garanties sur mesure qui vous correspondent.
+      Tout comme les salariés du secteur privé, les fonctionnaires bénéficient désormais
+       d’une participation de l’État à leur mutuelle santé.
+       La souscription à une complémentaire santé devient progressivement obligatoire 
+       dans le cadre de la réforme de la protection sociale complémentaire. Toutefois,
+        cette obligation ne s’applique pas encore à l’ensemble des agents publics.
+         Devis Mutuelle vous explique tout en détail !
       </p>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 flex flex-col md:flex-row items-start gap-4">
         <img
-      src={TNS}
+      src={official}
           alt="Personnage informatif"
           className="w-20 h-20 object-contain"
         />
@@ -114,18 +109,20 @@ export default function QuestionsSection() {
           <h3 className="font-semibold text-blue-900 mb-2">Ce qu’il faut retenir :</h3>
           <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm leading-relaxed">
             <li>
-            La mutuelle TNS est destinée aux travailleurs non-salariés comme les professions libérales,
-             artisans et commerçants,
-             pour couvrir les frais de santé non remboursés par l’Assurance Maladie.
+            Depuis 2025, l’État finance 50% du coût de la mutuelle des fonctionnaires, 
+            alignant progressivement leur protection sociale sur celle du secteur privé.
+             La fonction publique hospitalière bénéficiera de cette réforme à partir de 2026.
             </li>
             <li>
-            Comparer les offres avec les Devis mutuelle  vous permet de trouver une mutuelle adaptée à son budget
-             et à ses besoins,
-             notamment pour les soins dentaires, optiques et hospitaliers.
+            Tous les agents publics peuvent souscrire une mutuelle référencée, mais la prise en 
+            charge dépend du statut.
+             Les contractuels et vacataires doivent vérifier leur éligibilité auprès de leur employeur.
             </li>
             <li>
-            Le contrat Madelin permet aux indépendants (hors autoentrepreneurs) de déduire leurs
-             cotisations de leur revenu imposable, optimisant ainsi leur protection santé.
+            Choisir une mutuelle adaptée est essentiel pour bien couvrir les soins courants, l’optique, 
+            le dentaire et l’hospitalisation.
+             Comparer les offres permet d’optimiser son budget tout en bénéficiant des meilleures
+              garanties.
             </li>
           </ul>
         </div>
@@ -139,40 +136,35 @@ export default function QuestionsSection() {
         <ol className="list-decimal pl-6 space-y-2">
           <li>
             <a href="#section1" className="text-blue-500 hover:underline">
-            Qu’est-ce qu’une mutuelle TNS ?
+            Mutuelle fonctionnaire et protection sociale complémentaire : ce qui change en 2025
 
             </a>
           </li>
           <li>
             <a href="#section2" className="text-blue-500 hover:underline">
-            Quelle est la meilleure mutuelle pour vous en tant que TNS ?
+            Comparatif des mutuelles fonctionnaire : quelle est la meilleure ?
             </a>
           </li>
           {isExpanded && (
             <>
               <li>
                 <a href="#section3" className="text-blue-500 hover:underline">
-                Quel est le prix d'une mutuelle pour indépendant ?
+                Comparez les prix et les garanties de votre mutuelle fonctionnaire pour bien la choisir
                 </a>
               </li>
               <li>
                 <a href="#section4" className="text-blue-500 hover:underline">
-                Comparez les mutuelles santé pour les travailleurs indépendants
+                Quels sont les critères à prendre en compte lors de votre comparaison ?
                 </a>
               </li>
               <li>
                 <a href="#section5" className="text-blue-500 hover:underline">
-                Mutuelle santé TNS : qu’est-ce que le contrat Madelin ?
+                Quel est le prix de votre mutuelle fonctionnaire ?
                 </a>
               </li>
               <li>
-                <a href="#section6" className="text-blue-500 hover:underline">
-                Quelles garanties souscrire si vous êtes un travailleur non salarié ?
-                </a>
-              </li>
-              <li>
-                <a href="#section7" className="text-blue-500 hover:underline">
-                Pourquoi utiliser le comparateur de mutuelles TNS sur les Devis mutuelle  ?
+                <a href="#section5" className="text-blue-500 hover:underline">
+                Pourquoi utiliser un comparateur de mutuelle fonctionnaire sur Devis Mutuelle ?
                 </a>
               </li>
            
@@ -189,43 +181,34 @@ export default function QuestionsSection() {
         </button>
       </div>
       <img
-              src={TNS2} // remplace par l’URL correcte selon ton projet
+              src={fonctionnaire} // remplace par l’URL correcte selon ton projet
               alt="Mutuelle entreprise"
               className="w-full h-auto object-cover"
             />
       {/* Sections détaillées */}
       <div className="space-y-10 text-gray-700">
         <section id="section1">
-        <MutuelleTNS/>
+       <MutuelleFonctionnaire/>
         </section>
         <CompareBanner/>
         <section id="section2">
-    <MeilleureMutuelleTNS/>
+      <ComparatifMutuelleFonctionnaire/>
         </section>
        
         <CompareBanner/>
     
-        
         <section id="section3">
-      <PrixMutuelleIndependant/>
+        <CompareGarantiesFonctionnaires/>
         </section>
-        <CompareBanner/>
         <section id="section4">
-          <CompareMutuellesTNS/>
+        <CriteresComparaison/>
         </section>
-        <CompareBanner/>
-        <FaqMutuelleSenior/>
         <section id="section5">
-        <ContratMadelinTNS/>
+        <TableauMutuellePrix/>
         </section>
         <CompareBanner/>
-        <section id="section6" >
-        <GarantiesTravailleurNonSalarie/>
-        </section>
-        <section id="section7" >
-        <CompareMutuelleTNS2/>
-        </section>
-        <FaqSection/>
+       <AvantagesComparateur/>
+
          </div>
          </div>
   );

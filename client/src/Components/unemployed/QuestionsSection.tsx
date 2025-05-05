@@ -1,25 +1,18 @@
 import { ChevronDown } from 'lucide-react';
 import { SetStateAction, useState } from 'react';
 import mutuelleImage from "../../assets/optique/images/mutuelle-optique.png"
-import TNS from "../../assets/TNS/images/TNS.png"
-import ClassementMutuelleSenior from './ClassementMutuelleSenior';
+import jobless from "../../assets/unemployed/images/jobless.png"
 import { Info } from "lucide-react"; // Icône informative, facultative
 import mutuelleIcon from "../../assets/optique/images/download.jpg"; // Remplace par le bon chemin vers ton icône
-import CompareBanner from "../../Components/TNS/CompareBanner"
-import TNS2 from "../../assets/TNS/images/TNS2.png"
-import GarantiesMutuelleSenior from "./GarantiesMutuelleSenior"
-import MutuelleSeniorInfos from './MutuelleSeniorInfos';
-import ComparatifMutuelleSenior from './ComparatifMutuelleSenior';
-import TableauPrixMutuelleSenior from './TableauPrixMutuelleSenior';
-import FaqMutuelleSenior from './FaqSection';
-import MutuelleTNS from './MutuelleTNS';
-import MeilleureMutuelleTNS from './MeilleureMutuelleTNS';
-import PrixMutuelleIndependant from './PrixMutuelleIndependant';
-import CompareMutuellesTNS from './CompareMutuellesTNS';
-import ContratMadelinTNS from './ContratMadelinTNS';
-import GarantiesTravailleurNonSalarie from './GarantiesTravailleurNonSalarie';
-import CompareMutuelleTNS2 from './CompareMutuelleTNS2';
-import FaqSection from './FaqSection';
+import CompareBanner from "../../Components/senior/CompareBanner"
+import chomeur from "../../assets/unemployed/images/mutuelle-chomeur.png"
+import WhyMutuelleUnemployed from './WhyMutuelleUnemployed';
+import CheapMutuelleForUnemployed from './CheapMutuelleForUnemployed';
+import GuaranteeComparison from './GuaranteeComparison';
+import WhyMutuelleUnemployed2 from './WhyMutuelleUnemployed2';
+import MutuelleChomage from './MutuelleChomage';
+import MutuelleChomageIndividuelle from './MutuelleChomageIndividuelle';
+
 const faqData = [
   {
     question: "Qu’est-ce que le 100% santé en optique ?",
@@ -89,24 +82,23 @@ export default function QuestionsSection() {
         <span className="mx-2">›</span>
         <a href="#" className="hover:text-blue-600">Mutuelle sante</a>
         <span className="mx-2">›</span>
-        <span className="text-gray-500">Profil - Mutuelle TNS : comparez les mutuelles pour travailleur non salarié en 2025</span>
+        <span className="text-gray-500">Profil - Mutuelle chômeur : quelle est la meilleure mutuelle pour les demandeurs d'emploi en 2025 ?</span>
       </div>
 
       <h1 className="text-3xl font-bold text-teal-800 mb-6">
-      Mutuelle TNS : comparez les mutuelles pour travailleur non salarié en 2025
+      Mutuelle chômeur : quelle est la meilleure mutuelle pour les demandeurs d'emploi en 2025 ?
       </h1>
 
       <section className="mt-10 max-w-4xl mx-auto px-4">
       <p className="text-gray-700 mb-6 leading-relaxed">
-      En tant que travailleur non salarié (TNS) c'est à vous de faire les démarches pour souscrire
-       une mutuelle santé adaptée à vos besoins de santé. les Devis mutuelle  vous donne tous les conseils
-        pour trouver la mutuelle TNS 
-      avec des garanties sur mesure qui vous correspondent.
+      Pendant une période de chômage, les dépenses contraintes ne sont pas forcément la priorité
+       dans votre budget. Néanmoins, souscrire une mutuelle santé vous permet de prendre en charge vos soins sans avoir besoin de les sacrifier au profit d’autres dépenses. Pour trouver la mutuelle chômage qui vous convient le mieux 
+      à votre profil, lesfurets.com sont là pour vous accompagner dans votre démarche de comparaison.
       </p>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 flex flex-col md:flex-row items-start gap-4">
         <img
-      src={TNS}
+      src={jobless}
           alt="Personnage informatif"
           className="w-20 h-20 object-contain"
         />
@@ -114,18 +106,18 @@ export default function QuestionsSection() {
           <h3 className="font-semibold text-blue-900 mb-2">Ce qu’il faut retenir :</h3>
           <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm leading-relaxed">
             <li>
-            La mutuelle TNS est destinée aux travailleurs non-salariés comme les professions libérales,
-             artisans et commerçants,
-             pour couvrir les frais de santé non remboursés par l’Assurance Maladie.
+            Après la perte de votre emploi, vous pouvez conserver votre mutuelle d'entreprise
+             jusqu'à 12 mois grâce à la portabilité des droits, sous certaines conditions.
             </li>
             <li>
-            Comparer les offres avec les Devis mutuelle  vous permet de trouver une mutuelle adaptée à son budget
-             et à ses besoins,
-             notamment pour les soins dentaires, optiques et hospitaliers.
+            En tant que demandeur d'emploi avec des ressources limitées, vous pouvez être éligible à la CSS
+             (complémentaire santé solidaire), 
+            qui vous permet de bénéficier d'une mutuelle gratuite ou à moins d'une 1€ et de couvrir vos soins.
             </li>
             <li>
-            Le contrat Madelin permet aux indépendants (hors autoentrepreneurs) de déduire leurs
-             cotisations de leur revenu imposable, optimisant ainsi leur protection santé.
+            Souscrire une mutuelle santé vous permet de réduire tout ou partie de votre reste à charge. 
+            En comparant les différentes offres 
+            vous pouvez trouver celle qui correspond le mieux à vos besoins.
             </li>
           </ul>
         </div>
@@ -139,40 +131,30 @@ export default function QuestionsSection() {
         <ol className="list-decimal pl-6 space-y-2">
           <li>
             <a href="#section1" className="text-blue-500 hover:underline">
-            Qu’est-ce qu’une mutuelle TNS ?
+            Pourquoi souscrire une mutuelle quand on est demandeur d’emploi ?
 
             </a>
           </li>
           <li>
             <a href="#section2" className="text-blue-500 hover:underline">
-            Quelle est la meilleure mutuelle pour vous en tant que TNS ?
+            Mutuelle santé pas chère pour chômeur : une offre adaptée avec Devis mutuelle
             </a>
           </li>
           {isExpanded && (
             <>
               <li>
                 <a href="#section3" className="text-blue-500 hover:underline">
-                Quel est le prix d'une mutuelle pour indépendant ?
+                Comparez les garanties de votre mutuelle santé en un clin d'œil !
                 </a>
               </li>
               <li>
                 <a href="#section4" className="text-blue-500 hover:underline">
-                Comparez les mutuelles santé pour les travailleurs indépendants
+                Mutuelle et au chômage : 4 solutions pour être mieux remboursé de ses frais de santé lorsqu'on est sans emploi
                 </a>
               </li>
               <li>
                 <a href="#section5" className="text-blue-500 hover:underline">
-                Mutuelle santé TNS : qu’est-ce que le contrat Madelin ?
-                </a>
-              </li>
-              <li>
-                <a href="#section6" className="text-blue-500 hover:underline">
-                Quelles garanties souscrire si vous êtes un travailleur non salarié ?
-                </a>
-              </li>
-              <li>
-                <a href="#section7" className="text-blue-500 hover:underline">
-                Pourquoi utiliser le comparateur de mutuelles TNS sur les Devis mutuelle  ?
+                Un pari sur le long terme : souscrire votre propre mutuelle chômage individuelle
                 </a>
               </li>
            
@@ -189,43 +171,34 @@ export default function QuestionsSection() {
         </button>
       </div>
       <img
-              src={TNS2} // remplace par l’URL correcte selon ton projet
+              src={chomeur} // remplace par l’URL correcte selon ton projet
               alt="Mutuelle entreprise"
               className="w-full h-auto object-cover"
             />
       {/* Sections détaillées */}
       <div className="space-y-10 text-gray-700">
         <section id="section1">
-        <MutuelleTNS/>
+        <WhyMutuelleUnemployed/>
         </section>
         <CompareBanner/>
         <section id="section2">
-    <MeilleureMutuelleTNS/>
+      <CheapMutuelleForUnemployed/>
         </section>
        
         <CompareBanner/>
     
-        
         <section id="section3">
-      <PrixMutuelleIndependant/>
+        <GuaranteeComparison/>
         </section>
-        <CompareBanner/>
         <section id="section4">
-          <CompareMutuellesTNS/>
+     <MutuelleChomage/>
         </section>
-        <CompareBanner/>
-        <FaqMutuelleSenior/>
         <section id="section5">
-        <ContratMadelinTNS/>
+        <MutuelleChomageIndividuelle/>
         </section>
         <CompareBanner/>
-        <section id="section6" >
-        <GarantiesTravailleurNonSalarie/>
-        </section>
-        <section id="section7" >
-        <CompareMutuelleTNS2/>
-        </section>
-        <FaqSection/>
+    {/*<FaqMutuelleSenior/>*/}
+
          </div>
          </div>
   );
