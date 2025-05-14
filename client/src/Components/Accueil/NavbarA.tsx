@@ -162,6 +162,7 @@ const NavbarA: React.FC = () => {
            <li><Link to="/profil/sans-emploi" onClick={toggleMenu}>Sans emploi</Link></li>
            <li><Link to="/profil/fonctionnaire" onClick={toggleMenu}>Fonctionnaire</Link></li>
            <li><Link to="/profil/etudiant" onClick={toggleMenu}>Étudiant</Link></li>
+           <li><Link to="/profil/auto-entrepreneur" onClick={toggleMenu}>Auto-entrepreneur</Link></li>
            <li><Link to="/profil/entreprise" onClick={toggleMenu}>Mutuelle entreprise</Link></li>
          </ul>
        </div>
